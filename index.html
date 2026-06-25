@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -45,13 +46,11 @@ img,svg{display:block}
 .mp-banner h2{color:#fff;font-size:14.5px;font-weight:700;margin-bottom:4px;line-height:1.3}
 .mp-banner p{color:rgba(255,255,255,.78);font-size:11px}
 .mp-banner-badge{background:var(--gold);color:var(--navy);font-size:11px;font-weight:700;padding:8px 14px;border-radius:20px;white-space:nowrap;border:none;cursor:pointer;flex-shrink:0}
-
 .mp-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.1rem}
 .mp-cat{background:var(--card);border-radius:14px;padding:.8rem .3rem;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .15s;box-shadow:0 2px 6px rgba(10,40,100,.06)}
 .mp-cat.active{border-color:var(--gold);background:#fffaf0}
 .mp-cat-icon{font-size:24px;margin-bottom:4px}
 .mp-cat-label{font-size:10.5px;color:var(--blue);font-weight:700}
-
 .mp-section-title{color:var(--navy-deep);font-size:14.5px;font-weight:700;margin-bottom:.7rem;display:flex;align-items:center;gap:6px}
 .mp-section-title i{color:var(--blue)}
 .mp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
@@ -71,11 +70,10 @@ img,svg{display:block}
 .sc-btn{display:flex;gap:6px}
 .btn-pesan{flex:1;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:7px;font-size:10.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px}
 .btn-wa{background:var(--green);color:#fff;border:none;border-radius:8px;padding:7px 9px;font-size:13px;cursor:pointer}
-
 .empty-state{grid-column:1/-1;text-align:center;padding:2rem 1rem;color:#7a8499}
 .empty-state i{font-size:38px;display:block;margin:0 auto 8px}
 
-/* ===== BOTTOM NAV (storefront) ===== */
+/* ===== BOTTOM NAV ===== */
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:#fff;display:flex;border-top:1px solid #e6e9f2;z-index:50;padding-bottom:env(safe-area-inset-bottom)}
 .bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 6px;border:none;background:none;cursor:pointer;color:#9aa3b2;font-size:10px;font-weight:600}
 .bn-item i{font-size:19px}
@@ -93,10 +91,18 @@ img,svg{display:block}
 .seller-info{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #e5e7eb}
 .seller-ava{width:50px;height:50px;border-radius:12px;background:#e8eef8;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .menu-list{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
-.menu-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border:1.5px solid #e5e7eb;border-radius:10px;cursor:pointer;transition:all .15s}
+
+/* Menu item with qty */
+.menu-item{display:flex;align-items:center;gap:8px;padding:9px 11px;border:1.5px solid #e5e7eb;border-radius:10px;transition:all .15s}
 .menu-item.selected{border-color:var(--blue);background:#f0f5ff}
+.menu-item-left{flex:1;cursor:pointer;min-width:0}
 .menu-name{font-size:13px;color:#222;font-weight:500}
-.menu-price{font-size:12px;color:var(--blue);font-weight:700}
+.menu-price{font-size:11.5px;color:var(--blue);font-weight:700;margin-top:2px}
+.qty-ctrl{display:flex;align-items:center;gap:0;flex-shrink:0}
+.qty-btn{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--blue);background:#fff;color:var(--blue);font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.qty-btn:active{background:var(--blue);color:#fff}
+.qty-val{width:28px;text-align:center;font-size:13px;font-weight:700;color:var(--ink)}
+
 .form-group{margin-bottom:.8rem}
 .form-label{font-size:11.5px;color:#555;margin-bottom:4px;display:block;font-weight:600}
 .form-input{width:100%;border:1.5px solid #d1d5db;border-radius:8px;padding:9px 11px;font-size:13px;outline:none;font-family:inherit}
@@ -106,7 +112,12 @@ img,svg{display:block}
 .pay-opt.sel{border-color:var(--blue);background:#f0f5ff;color:var(--blue)}
 .btn-order{width:100%;background:var(--green);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
 .btn-order:active{background:var(--green-dark)}
-.total-box{background:#f0f5ff;border-radius:10px;padding:10px 13px;margin-bottom:.8rem;display:none}
+
+/* Summary box */
+.summary-box{background:#f0f5ff;border-radius:10px;padding:11px 13px;margin-bottom:.8rem;display:none;border:1px solid #c7d6fa}
+.summary-row{display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:4px}
+.summary-row.total{font-size:14px;font-weight:800;color:var(--navy-deep);border-top:1px dashed #c7d6fa;padding-top:7px;margin-top:4px}
+.ongkir-info{font-size:10.5px;color:#888;margin-top:3px}
 
 /* ===== ADMIN ===== */
 #adminApp{display:none;background:#f3f5fa;min-height:100vh}
@@ -117,28 +128,22 @@ img,svg{display:block}
 .adm-login-box p{font-size:12px;color:var(--muted);margin-bottom:1.2rem}
 .adm-login-box input{margin-bottom:.7rem}
 .adm-login-box .btn-order{background:var(--blue)}
-.adm-login-box .btn-order:active{background:var(--blue-light)}
 .adm-err{color:#dc2626;font-size:11.5px;margin-bottom:.5rem;display:none}
-
 .adm-header{background:var(--navy-deep);color:#fff;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:30}
 .adm-header h1{font-size:14.5px;font-weight:700}
 .adm-header .sub{font-size:10px;color:#9bb3e0;font-weight:500}
 .adm-exit{background:rgba(255,255,255,.12);border:none;color:#fff;font-size:11px;padding:6px 11px;border-radius:8px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:4px}
-
 .adm-tabs{display:flex;overflow-x:auto;background:#fff;border-bottom:1px solid #e6e9f2;position:sticky;top:48px;z-index:29}
 .adm-tab{flex-shrink:0;padding:11px 16px;font-size:12px;font-weight:700;color:#8a93a6;background:none;border:none;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:5px}
 .adm-tab.active{color:var(--blue);border-color:var(--blue)}
-
 .adm-body{padding:1rem;max-width:480px;margin:0 auto}
 .adm-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
 .adm-stat{background:#fff;border-radius:12px;padding:.9rem;box-shadow:0 2px 6px rgba(10,40,100,.06)}
 .adm-stat .num{font-size:21px;font-weight:800;color:var(--navy-deep)}
 .adm-stat .lbl{font-size:10.5px;color:var(--muted);font-weight:600;margin-top:2px}
-
 .adm-toolbar{display:flex;gap:8px;margin-bottom:.9rem}
 .adm-toolbar .form-input{flex:1}
 .btn-add{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:0 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
-
 .adm-card{background:#fff;border-radius:13px;padding:.85rem;margin-bottom:9px;box-shadow:0 2px 6px rgba(10,40,100,.06)}
 .adm-card-top{display:flex;gap:10px;align-items:center}
 .adm-ava{width:42px;height:42px;border-radius:10px;background:#e8eef8;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
@@ -155,21 +160,26 @@ img,svg{display:block}
 .adm-btn-del{background:#fef2f2;color:#dc2626}
 .adm-btn-menu{background:#fff7e6;color:#b45309}
 
+/* Drag handle */
+.drag-handle{cursor:grab;color:#c0c8d8;font-size:18px;padding:0 6px 0 0;flex-shrink:0;touch-action:none}
+.drag-handle:active{cursor:grabbing}
+.adm-card.dragging{opacity:.5;border:2px dashed var(--blue)}
+.adm-card.drag-over{border:2px solid var(--blue);background:#f0f5ff}
+
 .menu-row{display:flex;align-items:center;gap:8px;background:#f8f9fc;border-radius:9px;padding:8px 10px;margin-bottom:7px}
 .menu-row input{border:1px solid #dde1ea;border-radius:6px;padding:6px 8px;font-size:12px;font-family:inherit}
 .menu-row .mname{flex:1;min-width:0}
 .menu-row .mprice{width:90px}
 .menu-row .mdel{background:none;border:none;color:#dc2626;font-size:16px;cursor:pointer;flex-shrink:0}
+.menu-row .drag-handle{font-size:14px;padding:0 4px 0 0}
 
 .adm-fab{position:fixed;bottom:18px;right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);color:#fff;border:none;font-size:24px;box-shadow:0 6px 16px rgba(14,75,189,.4);cursor:pointer;z-index:25}
-
 .sheet-overlay{display:none;position:fixed;inset:0;background:rgba(5,15,40,.55);z-index:998;align-items:flex-end;justify-content:center}
 .sheet-overlay.show{display:flex}
 .sheet{background:#fff;border-radius:18px 18px 0 0;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:slideUp .2s ease}
 .sheet-header{padding:1rem 1.1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;border-bottom:1px solid #eee}
 .sheet-header h3{font-size:14.5px;font-weight:700;color:var(--ink)}
 .sheet-body{padding:1.1rem}
-
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:9px 18px;border-radius:30px;font-size:12.5px;font-weight:600;z-index:1100;opacity:0;transition:opacity .25s;pointer-events:none}
 .toast.show{opacity:1}
 .field-row{display:flex;gap:8px}
@@ -211,14 +221,12 @@ img,svg{display:block}
     </div>
     <button class="mp-banner-badge" onclick="goAdminLogin()">Admin</button>
   </div>
-
   <div class="mp-cats">
     <div class="mp-cat" onclick="setKatCat(this,'warung')"><div class="mp-cat-icon">🍽️</div><div class="mp-cat-label">Warung</div></div>
     <div class="mp-cat" onclick="setKatCat(this,'kedai')"><div class="mp-cat-icon">🏠</div><div class="mp-cat-label">Kedai</div></div>
     <div class="mp-cat" onclick="setKatCat(this,'toko')"><div class="mp-cat-icon">🛒</div><div class="mp-cat-label">Toko</div></div>
     <div class="mp-cat" onclick="setKatCat(this,'jasa')"><div class="mp-cat-icon">🔧</div><div class="mp-cat-label">Jasa</div></div>
   </div>
-
   <div class="mp-section-title"><i class="ti ti-store"></i> Seller di Kedungbanteng</div>
   <div class="mp-grid" id="sellerGrid"></div>
 </div>
@@ -231,6 +239,7 @@ img,svg{display:block}
   <button class="bn-item" onclick="goAdminLogin()"><i class="ti ti-user"></i>Admin</button>
 </div>
 
+<!-- ORDER MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeIfBg(event)">
 <div class="modal" id="modalBox">
   <div class="modal-header">
@@ -243,7 +252,6 @@ img,svg{display:block}
 
 <!-- ================= ADMIN ================= -->
 <div id="adminApp">
-
   <div class="adm-login" id="admLogin">
     <div class="adm-login-box">
       <i class="ti ti-shield-lock"></i>
@@ -270,7 +278,6 @@ img,svg{display:block}
     </div>
 
     <div class="adm-body">
-
       <!-- DASHBOARD -->
       <div class="adm-pane" id="pane-dashboard">
         <div class="adm-stats">
@@ -285,6 +292,7 @@ img,svg{display:block}
 
       <!-- SELLERS -->
       <div class="adm-pane" id="pane-sellers" style="display:none">
+        <div style="font-size:11px;color:#888;background:#fff7e6;border-radius:8px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;gap:6px"><i class="ti ti-drag-drop" style="font-size:14px"></i> Tahan & geser ikon <b>≡</b> untuk ubah urutan seller</div>
         <div class="adm-toolbar">
           <input class="form-input" id="admSearchSeller" placeholder="Cari seller..." oninput="renderAdminSellers()">
           <button class="btn-add" onclick="openSellerForm(null)"><i class="ti ti-plus"></i> Seller</button>
@@ -310,6 +318,12 @@ img,svg{display:block}
         <div class="form-group"><label class="form-label">Deskripsi Banner</label><input class="form-input" id="setBannerDesc"></div>
         <button class="btn-order" style="background:var(--blue)" onclick="saveSettings()"><i class="ti ti-device-floppy"></i> Simpan Pengaturan</button>
 
+        <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-truck-delivery"></i> Pengaturan Ongkos Kirim</div>
+        <div class="help-txt" style="margin-bottom:10px">Masukkan pilihan ongkos kirim yang akan tampil saat pelanggan memesan.</div>
+        <div id="ongkirList"></div>
+        <button class="btn-add" style="padding:9px 14px;font-size:12px;margin-bottom:1rem" onclick="addOngkir()"><i class="ti ti-plus"></i> Tambah Opsi Ongkos Kirim</button>
+        <button class="btn-order" style="background:var(--blue)" onclick="saveOngkir()"><i class="ti ti-device-floppy"></i> Simpan Ongkos Kirim</button>
+
         <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-key"></i> Keamanan</div>
         <div class="form-group"><label class="form-label">Ubah Kata Sandi Admin</label><input class="form-input" id="setNewPass" type="password" placeholder="Kata sandi baru"></div>
         <button class="btn-order" style="background:var(--navy-deep)" onclick="changePassword()"><i class="ti ti-lock"></i> Ubah Kata Sandi</button>
@@ -317,7 +331,6 @@ img,svg{display:block}
         <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-database"></i> Data</div>
         <button class="btn-order" style="background:#6b7280" onclick="resetData()"><i class="ti ti-refresh"></i> Reset ke Data Default</button>
       </div>
-
     </div>
   </div>
 </div>
@@ -355,8 +368,15 @@ img,svg{display:block}
 
 <script>
 /* ===================== DATA LAYER ===================== */
-const STORAGE_KEY='kab_marketplace_data_v1';
+const STORAGE_KEY='kab_marketplace_data_v2';
 const PASS_KEY='kab_admin_pass_v1';
+
+const defaultOngkir=[
+  {label:"Dalam Desa",harga:3000},
+  {label:"Luar Desa (< 5km)",harga:8000},
+  {label:"Luar Kota",harga:20000},
+  {label:"Gratis Ongkir",harga:0}
+];
 
 const defaultSellers=[
   {id:1,name:"Kedai Ikhsan",kat:"kedai",icon:"🍛",desc:"Nasi kotak, lauk pauk, catering harian",rating:"4.8",ulasan:"120",open:true,wa:"6281234567890",menu:[
@@ -389,15 +409,19 @@ const defaultSettings={namaUtama:"Kedungbanteng",subJudul:"APA BAE",bannerTitle:
 function loadData(){
   try{
     const raw=localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
+    if(raw){
+      const d=JSON.parse(raw);
+      if(!d.ongkir) d.ongkir=JSON.parse(JSON.stringify(defaultOngkir));
+      if(!d.orderCounter) d.orderCounter=1;
+      return d;
+    }
   }catch(e){}
-  return {sellers:JSON.parse(JSON.stringify(defaultSellers)),settings:JSON.parse(JSON.stringify(defaultSettings)),nextId:9};
+  return {sellers:JSON.parse(JSON.stringify(defaultSellers)),settings:JSON.parse(JSON.stringify(defaultSettings)),ongkir:JSON.parse(JSON.stringify(defaultOngkir)),nextId:9,orderCounter:1};
 }
 function saveData(){ localStorage.setItem(STORAGE_KEY,JSON.stringify(DATA)); }
 let DATA=loadData();
 
 function getPass(){ return localStorage.getItem(PASS_KEY)||'admin123'; }
-
 const katLabel={warung:"Warung",kedai:"Kedai",toko:"Toko",jasa:"Jasa"};
 
 function showToast(msg){
@@ -407,9 +431,31 @@ function showToast(msg){
   window._toastTO=setTimeout(()=>t.classList.remove('show'),1800);
 }
 
+/* ===================== ORDER NUMBER & DATETIME ===================== */
+function generateOrderId(){
+  const num=String(DATA.orderCounter||1).padStart(4,'0');
+  DATA.orderCounter=(DATA.orderCounter||1)+1;
+  saveData();
+  return 'KAB-'+num;
+}
+function getNow(){
+  const now=new Date();
+  const days=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const d=String(now.getDate()).padStart(2,'0');
+  const m=String(now.getMonth()+1).padStart(2,'0');
+  const y=now.getFullYear();
+  const hh=String(now.getHours()).padStart(2,'0');
+  const mm=String(now.getMinutes()).padStart(2,'0');
+  return {
+    date:`${days[now.getDay()]}, ${d}/${m}/${y}`,
+    time:`${hh}:${mm} WIB`,
+    full:`${d}/${m}/${y} ${hh}:${mm}`
+  };
+}
+
 /* ===================== STOREFRONT RENDER ===================== */
 let activeKat="semua";
-let selSeller=null, selMenus=[], selPay="COD";
+let selSeller=null, menuQty={}, selPay="COD", selOngkir=null;
 
 function applySettingsToStore(){
   document.getElementById('logoText').innerHTML=DATA.settings.namaUtama+'<span class="sub">'+DATA.settings.subJudul+'</span>';
@@ -473,7 +519,7 @@ function setKatCat(el,kat){
 
 function openModal(id){
   selSeller=DATA.sellers.find(s=>s.id===id);
-  selMenus=[]; selPay='COD';
+  menuQty={}; selPay='COD'; selOngkir=DATA.ongkir&&DATA.ongkir.length?DATA.ongkir[0]:null;
   renderModal();
   document.getElementById('modalOverlay').classList.add('show');
 }
@@ -483,6 +529,9 @@ function closeIfBg(e){if(e.target===document.getElementById('modalOverlay'))clos
 function renderModal(){
   document.getElementById('modalTitle').textContent='Pesan – '+selSeller.name;
   const body=document.getElementById('modalBody');
+  const ongkirOpts=(DATA.ongkir||[]).map((o,i)=>`
+    <button class="pay-opt${i===0?' sel':''}" onclick="setOngkir(this,${i})">${o.label} – Rp${o.harga.toLocaleString('id')}</button>
+  `).join('');
   body.innerHTML=`
     <div class="seller-info">
       <div class="seller-ava">${selSeller.icon}</div>
@@ -492,12 +541,19 @@ function renderModal(){
         <div style="font-size:11px;color:#f59e0b;margin-top:2px">★ ${selSeller.rating} · ${selSeller.ulasan} ulasan</div>
       </div>
     </div>
-    <div style="font-size:12px;color:#555;margin-bottom:6px;font-weight:700">Pilih Menu / Layanan:</div>
+    <div style="font-size:12px;color:#555;margin-bottom:8px;font-weight:700">📋 Pilih Menu / Layanan:</div>
     <div class="menu-list" id="menuList">
       ${selSeller.menu.map((m,i)=>`
-        <div class="menu-item" onclick="toggleMenu(${i})" id="mi${i}">
-          <span class="menu-name">${m.n}</span>
-          <span class="menu-price">Rp${m.p.toLocaleString('id')}</span>
+        <div class="menu-item" id="mi${i}">
+          <div class="menu-item-left" onclick="toggleMenu(${i})">
+            <div class="menu-name">${m.n}</div>
+            <div class="menu-price">Rp${m.p.toLocaleString('id')} / pcs</div>
+          </div>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+            <span class="qty-val" id="qv${i}">0</span>
+            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+          </div>
         </div>`).join('')}
     </div>
     <div class="form-group">
@@ -516,6 +572,11 @@ function renderModal(){
       <label class="form-label">Catatan (opsional)</label>
       <input class="form-input" id="fCatatan" placeholder="Pedas, tanpa bawang, dll...">
     </div>
+    ${DATA.ongkir&&DATA.ongkir.length?`
+    <div class="form-group">
+      <label class="form-label">🚚 Ongkos Kirim</label>
+      <div class="pay-opts" id="ongkirOpts">${ongkirOpts}</div>
+    </div>`:''}
     <div class="form-group">
       <label class="form-label">Metode Pembayaran</label>
       <div class="pay-opts">
@@ -525,49 +586,131 @@ function renderModal(){
         <button class="pay-opt" onclick="setPay(this,'E-Wallet')">💳 E-Wallet</button>
       </div>
     </div>
-    <div class="total-box" id="totalBox">
-      <div style="font-size:11px;color:#555">Total Pesanan</div>
-      <div id="totalVal" style="font-size:16px;font-weight:700;color:var(--blue)"></div>
+    <div class="summary-box" id="summaryBox">
+      <div id="summaryItems"></div>
+      <div class="summary-row">
+        <span>Subtotal</span><span id="subtotalVal">Rp0</span>
+      </div>
+      <div class="summary-row" id="ongkirRow" style="display:none">
+        <span>Ongkos Kirim</span><span id="ongkirVal">Rp0</span>
+      </div>
+      <div class="summary-row total">
+        <span>💰 Total Bayar</span><span id="totalVal">Rp0</span>
+      </div>
     </div>
     <button class="btn-order" onclick="kirimPesanan()"><i class="ti ti-brand-whatsapp"></i> Kirim Pesanan via WhatsApp</button>
   `;
+  selOngkir=DATA.ongkir&&DATA.ongkir.length?DATA.ongkir[0]:null;
+  updateSummary();
 }
 
-function toggleMenu(i){
+function changeQty(i, delta){
+  const cur=menuQty[i]||0;
+  const next=Math.max(0,cur+delta);
+  menuQty[i]=next;
+  document.getElementById('qv'+i).textContent=next;
   const el=document.getElementById('mi'+i);
-  const idx=selMenus.indexOf(i);
-  if(idx>-1){selMenus.splice(idx,1);el.classList.remove('selected');}
-  else{selMenus.push(i);el.classList.add('selected');}
-  const box=document.getElementById('totalBox');
-  if(!selMenus.length){box.style.display='none';return;}
-  const total=selMenus.reduce((a,i)=>a+selSeller.menu[i].p,0);
+  if(next>0) el.classList.add('selected');
+  else el.classList.remove('selected');
+  updateSummary();
+}
+function toggleMenu(i){
+  // clicking name area: if qty=0, set to 1; else keep
+  if(!(menuQty[i]||0)) changeQty(i,1);
+  else changeQty(i,-menuQty[i]);
+}
+
+function updateSummary(){
+  const hasItems=Object.values(menuQty).some(q=>q>0);
+  const box=document.getElementById('summaryBox');
+  if(!hasItems){box.style.display='none';return;}
   box.style.display='block';
-  document.getElementById('totalVal').textContent='Rp'+total.toLocaleString('id')+' ('+selMenus.length+' item)';
+  let subtotal=0;
+  let itemsHtml='';
+  selSeller.menu.forEach((m,i)=>{
+    const q=menuQty[i]||0;
+    if(q>0){
+      const sub=m.p*q;
+      subtotal+=sub;
+      itemsHtml+=`<div class="summary-row"><span>${m.n} x${q}</span><span>Rp${sub.toLocaleString('id')}</span></div>`;
+    }
+  });
+  document.getElementById('summaryItems').innerHTML=itemsHtml;
+  document.getElementById('subtotalVal').textContent='Rp'+subtotal.toLocaleString('id');
+  const ongkirHarga=selOngkir?selOngkir.harga:0;
+  const ongkirRow=document.getElementById('ongkirRow');
+  if(selOngkir&&DATA.ongkir&&DATA.ongkir.length){
+    ongkirRow.style.display='flex';
+    document.getElementById('ongkirVal').textContent='Rp'+ongkirHarga.toLocaleString('id');
+  } else {
+    ongkirRow.style.display='none';
+  }
+  const total=subtotal+ongkirHarga;
+  document.getElementById('totalVal').textContent='Rp'+total.toLocaleString('id');
+}
+
+function setOngkir(btn,idx){
+  document.querySelectorAll('#ongkirOpts .pay-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  selOngkir=DATA.ongkir[idx];
+  updateSummary();
 }
 function setPay(btn,pay){
-  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));
+  document.querySelectorAll('.pay-opts .pay-opt').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel'); selPay=pay;
 }
+
 function kirimPesanan(){
   const nama=document.getElementById('fNama').value.trim();
   const wa=document.getElementById('fWA').value.trim();
   const alamat=document.getElementById('fAlamat').value.trim();
   const catatan=document.getElementById('fCatatan').value.trim();
   if(!nama||!wa||!alamat){alert('Mohon lengkapi nama, nomor WA, dan alamat!');return;}
-  if(!selMenus.length){alert('Pilih minimal satu menu terlebih dahulu!');return;}
-  const items=selMenus.map(i=>'• '+selSeller.menu[i].n+' – Rp'+selSeller.menu[i].p.toLocaleString('id')).join('\n');
-  const total=selMenus.reduce((a,i)=>a+selSeller.menu[i].p,0);
-  const msg=`🛍️ *PESANAN BARU*\n*Kedungbanteng Apa Bae*\n\n`+
-    `🏪 ${selSeller.name}\n`+
-    `👤 Pemesan: ${nama}\n`+
-    `📱 WA: ${wa}\n`+
-    `📍 Alamat: ${alamat}\n\n`+
-    `📋 *Menu Dipesan:*\n${items}\n\n`+
-    `💰 Total: Rp${total.toLocaleString('id')}\n`+
-    `💳 Pembayaran: ${selPay}`+
-    (catatan?`\n📝 Catatan: ${catatan}`:'');
+  const hasItems=Object.values(menuQty).some(q=>q>0);
+  if(!hasItems){alert('Pilih minimal satu menu terlebih dahulu!');return;}
+
+  const orderId=generateOrderId();
+  const dt=getNow();
+  let subtotal=0;
+  let items='';
+  selSeller.menu.forEach((m,i)=>{
+    const q=menuQty[i]||0;
+    if(q>0){
+      const sub=m.p*q;
+      subtotal+=sub;
+      items+=`• ${m.n} x${q} = Rp${sub.toLocaleString('id')}\n`;
+    }
+  });
+  const ongkirHarga=selOngkir?selOngkir.harga:0;
+  const ongkirLabel=selOngkir?selOngkir.label:'–';
+  const total=subtotal+ongkirHarga;
+
+  const msg=
+`🛍️ *PESANAN BARU*
+*Kedungbanteng Apa Bae*
+━━━━━━━━━━━━━━━━━━
+🔢 No. Order : *${orderId}*
+📅 Tanggal   : ${dt.date}
+🕐 Waktu     : ${dt.time}
+━━━━━━━━━━━━━━━━━━
+🏪 Seller    : ${selSeller.name}
+👤 Pemesan   : ${nama}
+📱 WA        : ${wa}
+📍 Alamat    : ${alamat}
+━━━━━━━━━━━━━━━━━━
+📋 *Detail Pesanan:*
+${items}
+💰 Subtotal  : Rp${subtotal.toLocaleString('id')}
+🚚 Ongkir (${ongkirLabel}) : Rp${ongkirHarga.toLocaleString('id')}
+━━━━━━━━━━━━━━━━━━
+💵 *TOTAL BAYAR : Rp${total.toLocaleString('id')}*
+💳 Pembayaran  : ${selPay}${catatan?'\n📝 Catatan    : '+catatan:''}
+━━━━━━━━━━━━━━━━━━
+_Mohon segera konfirmasi, terima kasih_ 🙏`;
+
   window.open('https://wa.me/'+selSeller.wa+'?text='+encodeURIComponent(msg),'_blank');
 }
+
 function hubungiWA(id){
   const s=DATA.sellers.find(x=>x.id===id);
   const msg=`Halo ${s.name}, saya mau tanya/pesan melalui Kedungbanteng Apa Bae. Boleh info lebih lanjut?`;
@@ -634,15 +777,16 @@ function renderDashboard(){
     </div>`).join('');
 }
 
-/* ===================== ADMIN: SELLERS ===================== */
+/* ===================== ADMIN: SELLERS (with drag-sort) ===================== */
 function renderAdminSellers(){
   const q=(document.getElementById('admSearchSeller').value||'').toLowerCase();
   const list=document.getElementById('adminSellerList');
   const filtered=DATA.sellers.filter(x=>x.name.toLowerCase().includes(q));
   if(!filtered.length){ list.innerHTML='<div class="empty-state"><i class="ti ti-building-store"></i>Belum ada seller.</div>'; return; }
   list.innerHTML=filtered.map(x=>`
-    <div class="adm-card">
+    <div class="adm-card" draggable="true" data-id="${x.id}">
       <div class="adm-card-top">
+        <span class="drag-handle ti ti-grip-vertical" title="Geser untuk atur urutan"></span>
         <div class="adm-ava">${x.icon}</div>
         <div class="adm-card-info">
           <div class="nm">${x.name}</div>
@@ -656,7 +800,80 @@ function renderAdminSellers(){
         <button class="adm-btn-sm adm-btn-del" onclick="deleteSeller(${x.id})"><i class="ti ti-trash"></i> Hapus</button>
       </div>
     </div>`).join('');
+  initSellerDrag(list, filtered, q);
 }
+
+/* Drag-and-drop for sellers */
+let dragSrcId=null;
+function initSellerDrag(list, filtered, q){
+  const cards=list.querySelectorAll('.adm-card[draggable]');
+  cards.forEach(card=>{
+    card.addEventListener('dragstart',e=>{
+      dragSrcId=Number(card.dataset.id);
+      card.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+    });
+    card.addEventListener('dragend',()=>{
+      card.classList.remove('dragging');
+      list.querySelectorAll('.adm-card').forEach(c=>c.classList.remove('drag-over'));
+    });
+    card.addEventListener('dragover',e=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect='move';
+      list.querySelectorAll('.adm-card').forEach(c=>c.classList.remove('drag-over'));
+      card.classList.add('drag-over');
+    });
+    card.addEventListener('drop',e=>{
+      e.preventDefault();
+      const targetId=Number(card.dataset.id);
+      if(dragSrcId===targetId) return;
+      // Only reorder within filtered or full list
+      if(q){
+        // reorder full sellers based on filtered indices
+        const srcIdx=DATA.sellers.findIndex(x=>x.id===dragSrcId);
+        const tgtIdx=DATA.sellers.findIndex(x=>x.id===targetId);
+        const [moved]=DATA.sellers.splice(srcIdx,1);
+        DATA.sellers.splice(tgtIdx,0,moved);
+      } else {
+        const srcIdx=DATA.sellers.findIndex(x=>x.id===dragSrcId);
+        const tgtIdx=DATA.sellers.findIndex(x=>x.id===targetId);
+        const [moved]=DATA.sellers.splice(srcIdx,1);
+        DATA.sellers.splice(tgtIdx,0,moved);
+      }
+      saveData(); renderAdminSellers(); showToast('Urutan seller diperbarui');
+    });
+    // Touch drag for mobile
+    let touchStartY=0, touchItem=null;
+    card.addEventListener('touchstart',e=>{
+      touchStartY=e.touches[0].clientY;
+      dragSrcId=Number(card.dataset.id);
+      touchItem=card;
+    },{passive:true});
+    card.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      const y=e.touches[0].clientY;
+      const el=document.elementFromPoint(e.touches[0].clientX,y);
+      const target=el?el.closest('.adm-card[draggable]'):null;
+      list.querySelectorAll('.adm-card').forEach(c=>c.classList.remove('drag-over'));
+      if(target&&target!==card) target.classList.add('drag-over');
+    },{passive:false});
+    card.addEventListener('touchend',e=>{
+      const y=e.changedTouches[0].clientY;
+      const el=document.elementFromPoint(e.changedTouches[0].clientX,y);
+      const target=el?el.closest('.adm-card[draggable]'):null;
+      list.querySelectorAll('.adm-card').forEach(c=>c.classList.remove('drag-over'));
+      if(target&&target!==card){
+        const targetId=Number(target.dataset.id);
+        const srcIdx=DATA.sellers.findIndex(x=>x.id===dragSrcId);
+        const tgtIdx=DATA.sellers.findIndex(x=>x.id===targetId);
+        const [moved]=DATA.sellers.splice(srcIdx,1);
+        DATA.sellers.splice(tgtIdx,0,moved);
+        saveData(); renderAdminSellers(); showToast('Urutan seller diperbarui');
+      }
+    });
+  });
+}
+
 function toggleSellerOpen(id){
   const s=DATA.sellers.find(x=>x.id===id); s.open=!s.open; saveData(); renderAdminSellers();
   showToast(s.open?'Toko dibuka':'Toko ditutup');
@@ -708,7 +925,7 @@ function saveSellerForm(){
 function closeSheetIfBg(e,id){ if(e.target===document.getElementById(id)) closeSheet(id); }
 function closeSheet(id){ document.getElementById(id).classList.remove('show'); }
 
-/* ===================== ADMIN: PRODUCTS & PRICING ===================== */
+/* ===================== ADMIN: PRODUCTS (with drag-sort) ===================== */
 function initProductTab(){
   const sel=document.getElementById('prodSellerSelect');
   sel.innerHTML=DATA.sellers.map(s=>`<option value="${s.id}">${s.icon} ${s.name}</option>`).join('');
@@ -728,10 +945,12 @@ function renderProductManager(){
   const box=document.getElementById('productManager');
   if(!s){ box.innerHTML=''; return; }
   box.innerHTML=`
+    <div style="font-size:11px;color:#888;background:#fff7e6;border-radius:8px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;gap:6px"><i class="ti ti-drag-drop" style="font-size:14px"></i> Tahan & geser ikon <b>≡</b> untuk ubah urutan menu</div>
     <div class="mp-section-title" style="color:var(--ink)"><i class="ti ti-tag"></i> Daftar Produk / Menu — ${s.name}</div>
     <div id="menuRows">
       ${s.menu.map((m,i)=>`
-        <div class="menu-row">
+        <div class="menu-row" draggable="true" data-idx="${i}">
+          <span class="drag-handle ti ti-grip-vertical"></span>
           <input class="mname" value="${m.n}" onchange="updateMenuField(${id},${i},'n',this.value)" placeholder="Nama produk">
           <input class="mprice" type="number" value="${m.p}" onchange="updateMenuField(${id},${i},'p',this.value)" placeholder="Harga">
           <button class="mdel" onclick="deleteMenuItem(${id},${i})"><i class="ti ti-x"></i></button>
@@ -739,7 +958,58 @@ function renderProductManager(){
     </div>
     <button class="btn-add" style="width:100%;justify-content:center;padding:10px;margin-top:6px" onclick="addMenuItem(${id})"><i class="ti ti-plus"></i> Tambah Produk</button>
   `;
+  initMenuDrag(id,s);
 }
+
+let dragMenuSrcIdx=null;
+function initMenuDrag(sellerId, s){
+  const rows=document.querySelectorAll('#menuRows .menu-row[draggable]');
+  rows.forEach(row=>{
+    row.addEventListener('dragstart',e=>{
+      dragMenuSrcIdx=Number(row.dataset.idx);
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+    });
+    row.addEventListener('dragend',()=>{
+      row.classList.remove('dragging');
+      document.querySelectorAll('#menuRows .menu-row').forEach(r=>r.classList.remove('drag-over'));
+    });
+    row.addEventListener('dragover',e=>{
+      e.preventDefault();
+      document.querySelectorAll('#menuRows .menu-row').forEach(r=>r.classList.remove('drag-over'));
+      row.classList.add('drag-over');
+    });
+    row.addEventListener('drop',e=>{
+      e.preventDefault();
+      const targetIdx=Number(row.dataset.idx);
+      if(dragMenuSrcIdx===targetIdx) return;
+      const [moved]=s.menu.splice(dragMenuSrcIdx,1);
+      s.menu.splice(targetIdx,0,moved);
+      saveData(); renderProductManager(); showToast('Urutan menu diperbarui');
+    });
+    // Touch for mobile
+    row.addEventListener('touchstart',e=>{dragMenuSrcIdx=Number(row.dataset.idx);},{passive:true});
+    row.addEventListener('touchmove',e=>{
+      e.preventDefault();
+      const el=document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY);
+      const target=el?el.closest('#menuRows .menu-row[draggable]'):null;
+      document.querySelectorAll('#menuRows .menu-row').forEach(r=>r.classList.remove('drag-over'));
+      if(target&&target!==row) target.classList.add('drag-over');
+    },{passive:false});
+    row.addEventListener('touchend',e=>{
+      const el=document.elementFromPoint(e.changedTouches[0].clientX,e.changedTouches[0].clientY);
+      const target=el?el.closest('#menuRows .menu-row[draggable]'):null;
+      document.querySelectorAll('#menuRows .menu-row').forEach(r=>r.classList.remove('drag-over'));
+      if(target&&target!==row){
+        const targetIdx=Number(target.dataset.idx);
+        const [moved]=s.menu.splice(dragMenuSrcIdx,1);
+        s.menu.splice(targetIdx,0,moved);
+        saveData(); renderProductManager(); showToast('Urutan menu diperbarui');
+      }
+    });
+  });
+}
+
 function updateMenuField(sellerId,idx,field,value){
   const s=DATA.sellers.find(x=>x.id===sellerId);
   if(field==='p') value=parseInt(value)||0;
@@ -754,13 +1024,37 @@ function addMenuItem(sellerId){
   s.menu.push({n:'Produk Baru',p:0}); saveData(); renderProductManager();
 }
 
-/* ===================== ADMIN: SETTINGS ===================== */
+/* ===================== ADMIN: SETTINGS + ONGKIR ===================== */
 function initSettingsTab(){
   document.getElementById('setNamaUtama').value=DATA.settings.namaUtama;
   document.getElementById('setSubJudul').value=DATA.settings.subJudul;
   document.getElementById('setBannerTitle').value=DATA.settings.bannerTitle;
   document.getElementById('setBannerDesc').value=DATA.settings.bannerDesc;
   document.getElementById('setNewPass').value='';
+  renderOngkirList();
+}
+function renderOngkirList(){
+  const box=document.getElementById('ongkirList');
+  const list=DATA.ongkir||[];
+  box.innerHTML=list.map((o,i)=>`
+    <div class="menu-row" style="margin-bottom:8px">
+      <input style="flex:1.5;min-width:0" class="mname" value="${o.label}" placeholder="Nama area" onchange="DATA.ongkir[${i}].label=this.value">
+      <input style="width:100px" class="mprice" type="number" value="${o.harga}" placeholder="Harga" onchange="DATA.ongkir[${i}].harga=parseInt(this.value)||0">
+      <button class="mdel" onclick="removeOngkir(${i})"><i class="ti ti-x"></i></button>
+    </div>`).join('') || '<div class="help-txt" style="margin-bottom:8px">Belum ada opsi ongkos kirim.</div>';
+}
+function addOngkir(){
+  if(!DATA.ongkir) DATA.ongkir=[];
+  DATA.ongkir.push({label:'Area Baru',harga:5000});
+  renderOngkirList();
+}
+function removeOngkir(i){
+  DATA.ongkir.splice(i,1);
+  renderOngkirList();
+}
+function saveOngkir(){
+  saveData();
+  showToast('Ongkos kirim disimpan');
 }
 function saveSettings(){
   DATA.settings.namaUtama=document.getElementById('setNamaUtama').value.trim()||'Kedungbanteng';
@@ -778,7 +1072,7 @@ function changePassword(){
 }
 function resetData(){
   if(!confirm('Reset semua data seller & produk ke data default? Perubahan yang sudah dibuat akan hilang.')) return;
-  DATA={sellers:JSON.parse(JSON.stringify(defaultSellers)),settings:JSON.parse(JSON.stringify(defaultSettings)),nextId:9};
+  DATA={sellers:JSON.parse(JSON.stringify(defaultSellers)),settings:JSON.parse(JSON.stringify(defaultSettings)),ongkir:JSON.parse(JSON.stringify(defaultOngkir)),nextId:9,orderCounter:1};
   saveData(); renderDashboard(); renderAdminSellers(); initProductTab(); initSettingsTab();
   applySettingsToStore(); renderGrid();
   showToast('Data direset ke default');
@@ -788,67 +1082,11 @@ function resetData(){
 applySettingsToStore();
 renderGrid();
 </script>
-
-<script>
-// ===== ORDER & SETTINGS =====
-const AdminSettings = { ongkir: 5000 };
-
-function genOrderNo(){ return 'ORD-' + Date.now(); }
-function nowStr(){ return new Date().toLocaleString('id-ID'); }
-
-function changeQty(btn, delta){
-  const input = btn.parentNode.querySelector('input');
-  let v = parseInt(input.value||1);
-  v = Math.max(1, v+delta);
-  input.value = v;
-  calcTotal();
-}
-
-function calcTotal(){
-  let total = 0;
-  document.querySelectorAll('.menu-item.selected').forEach(it=>{
-    const price = parseInt(it.dataset.price||0);
-    const qty = parseInt(it.querySelector('.qty')?.value||1);
-    total += price * qty;
-  });
-  total += AdminSettings.ongkir;
-  const box = document.querySelector('.total-box');
-  if(box){
-    box.style.display='block';
-    box.innerHTML = 'Total Bayar: <b>Rp'+total.toLocaleString('id-ID')+'</b><br><small>Termasuk ongkir Rp'+AdminSettings.ongkir.toLocaleString('id-ID')+'</small>';
-  }
-  return total;
-}
-
-function buildStruk(){
-  return `STRUK PESANAN
-No Order : ${genOrderNo()}
-Tanggal  : ${nowStr()}
-Total    : Rp${calcTotal().toLocaleString('id-ID')}
-`;
-}
-</script>
 </body>
-
 </html>
+HTMLEOF
+echo "Done"
+Output
 
-<p class='note'>Mohon segera konfirmasi, terima kasih.</p>
-    <div class="address-section">
-      <label>Desa</label>
-      <select id="desa">
-        <option value="">Pilih Desa</option>
-        <option>Desa A</option>
-        <option>Desa B</option>
-        <option>Desa C</option>
-      </select>
+Done
 
-      <label>RT</label>
-      <input type="text" id="rt" placeholder="RT">
-
-      <label>RW</label>
-      <input type="text" id="rw" placeholder="RW">
-
-      <label>Patokan</label>
-      <input type="text" id="patokan" placeholder="Contoh: dekat masjid">
-    </div>
-    
