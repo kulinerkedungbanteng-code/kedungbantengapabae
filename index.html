@@ -788,5 +788,67 @@ function resetData(){
 applySettingsToStore();
 renderGrid();
 </script>
+
+<script>
+// ===== ORDER & SETTINGS =====
+const AdminSettings = { ongkir: 5000 };
+
+function genOrderNo(){ return 'ORD-' + Date.now(); }
+function nowStr(){ return new Date().toLocaleString('id-ID'); }
+
+function changeQty(btn, delta){
+  const input = btn.parentNode.querySelector('input');
+  let v = parseInt(input.value||1);
+  v = Math.max(1, v+delta);
+  input.value = v;
+  calcTotal();
+}
+
+function calcTotal(){
+  let total = 0;
+  document.querySelectorAll('.menu-item.selected').forEach(it=>{
+    const price = parseInt(it.dataset.price||0);
+    const qty = parseInt(it.querySelector('.qty')?.value||1);
+    total += price * qty;
+  });
+  total += AdminSettings.ongkir;
+  const box = document.querySelector('.total-box');
+  if(box){
+    box.style.display='block';
+    box.innerHTML = 'Total Bayar: <b>Rp'+total.toLocaleString('id-ID')+'</b><br><small>Termasuk ongkir Rp'+AdminSettings.ongkir.toLocaleString('id-ID')+'</small>';
+  }
+  return total;
+}
+
+function buildStruk(){
+  return `STRUK PESANAN
+No Order : ${genOrderNo()}
+Tanggal  : ${nowStr()}
+Total    : Rp${calcTotal().toLocaleString('id-ID')}
+`;
+}
+</script>
 </body>
+
 </html>
+
+<p class='note'>Mohon segera konfirmasi, terima kasih.</p>
+    <div class="address-section">
+      <label>Desa</label>
+      <select id="desa">
+        <option value="">Pilih Desa</option>
+        <option>Desa A</option>
+        <option>Desa B</option>
+        <option>Desa C</option>
+      </select>
+
+      <label>RT</label>
+      <input type="text" id="rt" placeholder="RT">
+
+      <label>RW</label>
+      <input type="text" id="rw" placeholder="RW">
+
+      <label>Patokan</label>
+      <input type="text" id="patokan" placeholder="Contoh: dekat masjid">
+    </div>
+    
