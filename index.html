@@ -1,137 +1,318 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Marketplace Desa</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{margin:0;font-family:system-ui;background:#f4f5f7}
-header{background:#e11d48;color:#fff;padding:14px;font-size:16px;font-weight:600}
-.container{padding:12px;max-width:900px;margin:auto}
-select,input,button{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:14px}
-button{background:#e11d48;color:#fff;border:none;font-weight:600}
-.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:14px}
-.merchant{display:flex;gap:12px;align-items:center}
-.logo{width:52px;height:52px;border-radius:12px;background:#fde2e7;
-display:flex;align-items:center;justify-content:center;font-size:26px}
-.badge{font-size:11px;background:#22c55e;color:#fff;padding:3px 8px;border-radius:10px}
-.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;
-border-top:1px solid #ddd;padding:10px}
-.hidden{display:none}
-.order-item{font-size:13px;margin-bottom:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+.mp-wrap{background:#0a3d8f;min-height:100vh;padding-bottom:2rem}
+.mp-header{background:#0e4bbd;padding:0 1rem}
+.mp-topbar{display:flex;align-items:center;gap:10px;padding:.75rem 0;max-width:900px;margin:0 auto}
+.mp-logo{color:#fff;font-size:16px;font-weight:500;flex-shrink:0;line-height:1.2}
+.mp-logo .sub{font-size:10px;color:#f9d94a;letter-spacing:.5px;display:block}
+.mp-search{flex:1;display:flex;background:#fff;border-radius:6px;overflow:hidden}
+.mp-search input{flex:1;border:none;outline:none;padding:8px 12px;font-size:13px;color:#222}
+.mp-search button{background:#f9d94a;border:none;padding:0 14px;cursor:pointer;font-size:16px;color:#0a3d8f}
+.mp-nav{display:flex;gap:8px;max-width:900px;margin:0 auto;padding:.5rem 0}
+.mp-nav button{background:transparent;border:none;color:rgba(255,255,255,.7);font-size:12px;cursor:pointer;white-space:nowrap;padding:6px 14px;border-radius:20px;transition:all .15s;border:1.5px solid transparent}
+.mp-nav button.active,.mp-nav button:hover{color:#fff;background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.mp-banner{background:#1558d6;padding:1rem 1.25rem;max-width:900px;margin:.75rem auto;border-radius:10px;display:flex;align-items:center;justify-content:space-between}
+.mp-banner h2{color:#fff;font-size:15px;font-weight:500;margin-bottom:3px}
+.mp-banner p{color:rgba(255,255,255,.75);font-size:11px}
+.mp-banner-badge{background:#f9d94a;color:#0a3d8f;font-size:11px;font-weight:500;padding:5px 14px;border-radius:20px;white-space:nowrap;border:none;cursor:pointer}
+.mp-section{max-width:900px;margin:1rem auto;padding:0 .5rem}
+.mp-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
+.mp-cat{background:#fff;border-radius:10px;padding:.75rem .5rem;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.mp-cat:hover,.mp-cat.active{border-color:#f9d94a;transform:translateY(-2px)}
+.mp-cat-icon{font-size:26px;margin-bottom:4px}
+.mp-cat-label{font-size:11px;color:#1558d6;font-weight:500}
+.mp-section-title{color:#fff;font-size:14px;font-weight:500;margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.mp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.seller-card{background:#fff;border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .18s}
+.seller-card:hover{border-color:#f9d94a;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.sc-img{height:90px;background:#e8eef8;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative}
+.sc-badge{position:absolute;top:6px;left:6px;background:#f9d94a;color:#0a3d8f;font-size:9px;font-weight:500;padding:2px 7px;border-radius:10px}
+.sc-badge.tutup{background:#e5e7eb;color:#666}
+.sc-kat{position:absolute;bottom:6px;right:6px;background:rgba(14,75,189,.85);color:#fff;font-size:9px;padding:2px 7px;border-radius:10px}
+.sc-open{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:#22c55e}
+.sc-body{padding:10px}
+.sc-name{font-size:13px;font-weight:500;color:#111;margin-bottom:3px}
+.sc-desc{font-size:11px;color:#666;margin-bottom:6px;line-height:1.4}
+.sc-meta{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#888}
+.sc-rating{color:#f59e0b;font-size:11px}
+.sc-btn{display:flex;gap:6px;margin-top:8px}
+.btn-pesan{flex:1;background:#0e4bbd;color:#fff;border:none;border-radius:5px;padding:6px;font-size:11px;cursor:pointer;transition:background .15s}
+.btn-pesan:hover{background:#1558d6}
+.btn-wa{background:#22c55e;color:#fff;border:none;border-radius:5px;padding:6px 8px;font-size:14px;cursor:pointer}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:400px;max-height:90vh;overflow-y:auto}
+.modal-header{background:#0e4bbd;padding:1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0}
+.modal-header h3{color:#fff;font-size:15px;font-weight:500}
+.modal-close{background:transparent;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1}
+.modal-body{padding:1rem}
+.seller-info{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid #e5e7eb}
+.seller-ava{width:48px;height:48px;border-radius:10px;background:#e8eef8;display:flex;align-items:center;justify-content:center;font-size:24px}
+.menu-list{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem}
+.menu-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;transition:all .15s}
+.menu-item:hover,.menu-item.selected{border-color:#0e4bbd;background:#f0f5ff}
+.menu-name{font-size:13px;color:#222}
+.menu-price{font-size:12px;color:#0e4bbd;font-weight:500}
+.form-group{margin-bottom:.75rem}
+.form-label{font-size:12px;color:#555;margin-bottom:4px;display:block}
+.form-input{width:100%;border:1px solid #d1d5db;border-radius:6px;padding:8px 10px;font-size:13px;outline:none;font-family:inherit}
+.form-input:focus{border-color:#0e4bbd}
+.pay-opts{display:flex;gap:8px;flex-wrap:wrap}
+.pay-opt{padding:5px 12px;border:1.5px solid #d1d5db;border-radius:20px;font-size:11px;cursor:pointer;background:transparent;font-family:inherit}
+.pay-opt.sel{border-color:#0e4bbd;background:#f0f5ff;color:#0e4bbd}
+.btn-order{width:100%;background:#22c55e;color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
+.btn-order:hover{background:#16a34a}
+.total-box{background:#f0f5ff;border-radius:8px;padding:8px 12px;margin-bottom:.75rem;display:none}
 </style>
-</head>
-<body>
 
-<header>🍔 Marketplace Desa</header>
-
-<div class="container">
-
-<!-- LOGIN -->
-<div class="card" id="loginBox">
-<h3>Login WhatsApp</h3>
-<select id="role">
-<option value="buyer">Pembeli</option>
-<option value="seller">Seller</option>
-<option value="admin">Admin</option>
-</select>
-<input id="wa" placeholder="628xxxxxx">
-<button onclick="login()">Masuk</button>
-<small>Tanpa password</small>
+<div class="mp-wrap">
+<div class="mp-header">
+  <div class="mp-topbar">
+    <div class="mp-logo">
+      Kedungbanteng<br><span class="sub">APA BAE</span>
+    </div>
+    <div class="mp-search">
+      <input type="text" placeholder="Cari warung, kedai, toko, jasa..." id="searchInput" oninput="renderGrid()">
+      <button><i class="ti ti-search" aria-hidden="true"></i></button>
+    </div>
+    <div style="color:rgba(255,255,255,.75);font-size:11px;white-space:nowrap"><i class="ti ti-map-pin" aria-hidden="true"></i> Kedungbanteng</div>
+  </div>
+  <div class="mp-nav">
+    <button class="active" onclick="setKat(this,'semua')">🏘️ Semua</button>
+    <button onclick="setKat(this,'warung')">🍽️ Warung</button>
+    <button onclick="setKat(this,'kedai')">🏠 Kedai</button>
+    <button onclick="setKat(this,'toko')">🛒 Toko</button>
+    <button onclick="setKat(this,'jasa')">🔧 Jasa</button>
+  </div>
 </div>
 
-<!-- FILTER -->
-<div class="card hidden" id="filterBox">
-<select id="desa">
-<option>Kedungbanteng</option>
-<option>Margasari</option>
-</select>
-<select id="rt">
-<option>RT 01 / RW 01</option>
-<option>RT 02 / RW 05</option>
-</select>
+<div class="mp-section">
+  <div class="mp-banner">
+    <div>
+      <h2>Belanja & Pesan dari Tetangga Sendiri</h2>
+      <p>Warung, kedai, toko & jasa lokal Desa Kedungbanteng</p>
+    </div>
+    <button class="mp-banner-badge">Daftar Seller</button>
+  </div>
+
+  <div class="mp-cats">
+    <div class="mp-cat" onclick="setKatCat(this,'warung')"><div class="mp-cat-icon">🍽️</div><div class="mp-cat-label">Warung</div></div>
+    <div class="mp-cat" onclick="setKatCat(this,'kedai')"><div class="mp-cat-icon">🏠</div><div class="mp-cat-label">Kedai</div></div>
+    <div class="mp-cat" onclick="setKatCat(this,'toko')"><div class="mp-cat-icon">🛒</div><div class="mp-cat-label">Toko</div></div>
+    <div class="mp-cat" onclick="setKatCat(this,'jasa')"><div class="mp-cat-icon">🔧</div><div class="mp-cat-label">Jasa</div></div>
+  </div>
+
+  <div class="mp-section-title"><i class="ti ti-store" aria-hidden="true"></i> Seller di Kedungbanteng</div>
+  <div class="mp-grid" id="sellerGrid"></div>
+</div>
 </div>
 
-<!-- MERCHANT LIST -->
-<div id="merchantList"></div>
-
-<!-- ADMIN -->
-<div class="card hidden" id="adminBox">
-<h3>📦 Order Masuk</h3>
-<div id="orderList"></div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeIfBg(event)">
+<div class="modal" id="modalBox">
+  <div class="modal-header">
+    <h3 id="modalTitle">Pesan Sekarang</h3>
+    <button class="modal-close" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" id="modalBody"></div>
 </div>
-
-</div>
-
-<div class="bottom hidden" id="orderBox">
-<div id="orderInfo"></div>
-<button onclick="kirim()">Kirim ke Seller</button>
 </div>
 
 <script>
-let sellers=JSON.parse(localStorage.getItem("sellers")||`[
-{name:"Warung Bu Siti",wa:"628111",desa:"Kedungbanteng",rt:"RT 02 / RW 05",menu:["Soto","Pecel"]},
-{name:"Kedai Kopi",wa:"628222",desa:"Kedungbanteng",rt:"RT 01 / RW 01",menu:["Kopi","Teh"]}
-]`)
-let orders=JSON.parse(localStorage.getItem("orders")||"[]")
-let current=null,cart=null
+const sellers=[
+  {id:1,name:"Kedai Ikhsan",kat:"kedai",icon:"🍛",desc:"Nasi kotak, lauk pauk, catering harian",rating:"4.8",ulasan:"120",open:true,wa:"6281234567890",menu:[
+    {n:"Nasi Kotak Ayam",p:15000},{n:"Nasi Kotak Ikan",p:13000},{n:"Catering Dus",p:12000},{n:"Es Teh Manis",p:3000}
+  ]},
+  {id:2,name:"Warung Bu Siti",kat:"warung",icon:"🍲",desc:"Masakan rumahan, sayur lodeh, soto",rating:"4.6",ulasan:"87",open:true,wa:"6281234567891",menu:[
+    {n:"Soto Ayam",p:12000},{n:"Sayur Lodeh",p:8000},{n:"Nasi Pecel",p:10000},{n:"Tempe Goreng",p:3000}
+  ]},
+  {id:3,name:"Warung Makan Pak Dhe",kat:"warung",icon:"🥘",desc:"Nasi warteg, aneka lauk, murah meriah",rating:"4.5",ulasan:"63",open:true,wa:"6281234567898",menu:[
+    {n:"Nasi + 1 Lauk",p:8000},{n:"Nasi + 2 Lauk",p:11000},{n:"Nasi Goreng",p:10000}
+  ]},
+  {id:4,name:"Kedai Kopi Mbak Eni",kat:"kedai",icon:"☕",desc:"Kopi susu, teh tawar, gorengan hangat",rating:"4.4",ulasan:"95",open:true,wa:"6281234567897",menu:[
+    {n:"Kopi Tubruk",p:4000},{n:"Kopi Susu",p:7000},{n:"Teh Manis",p:3000},{n:"Gorengan",p:2000}
+  ]},
+  {id:5,name:"Toko Sembako Jaya",kat:"toko",icon:"🛒",desc:"Beras, minyak, gula, tepung, kebutuhan dapur",rating:"4.5",ulasan:"55",open:true,wa:"6281234567895",menu:[
+    {n:"Beras 5kg",p:65000},{n:"Minyak Goreng 1L",p:18000},{n:"Gula Pasir 1kg",p:14000},{n:"Tepung Terigu 1kg",p:10000}
+  ]},
+  {id:6,name:"Toko Kacang Bogares",kat:"toko",icon:"🥜",desc:"Kacang bogares asli Tegal, gurih & renyah",rating:"5.0",ulasan:"450",open:true,wa:"6281234567894",menu:[
+    {n:"Kacang Bogares 250gr",p:15000},{n:"Kacang Bogares 500gr",p:28000},{n:"Hampers Kacang",p:55000}
+  ]},
+  {id:7,name:"Jasa Ojek Pak Hari",kat:"jasa",icon:"🛵",desc:"Antar jemput, kirim barang dalam desa",rating:"4.7",ulasan:"178",open:true,wa:"6281234567896",menu:[
+    {n:"Antar Dalam Desa",p:5000},{n:"Antar Luar Desa",p:15000},{n:"Kirim Paket",p:8000}
+  ]},
+  {id:8,name:"Jasa Servis Elektronik",kat:"jasa",icon:"🔌",desc:"Servis HP, kipas angin, TV, peralatan rumah",rating:"4.6",ulasan:"42",open:false,wa:"6281234567899",menu:[
+    {n:"Servis HP",p:50000},{n:"Servis Kipas Angin",p:35000},{n:"Servis TV",p:80000}
+  ]}
+];
 
-function save(){localStorage.setItem("sellers",JSON.stringify(sellers))
-localStorage.setItem("orders",JSON.stringify(orders))}
+let activeKat="semua";
+let selSeller=null;
+let selMenus=[];
+let selPay="COD";
 
-function login(){
-current={role:role.value,wa:wa.value}
-loginBox.classList.add("hidden")
-filterBox.classList.remove("hidden")
-renderMerchants()
-if(current.role==="admin"){adminBox.classList.remove("hidden");renderOrders()}
+const katLabel={warung:"Warung",kedai:"Kedai",toko:"Toko",jasa:"Jasa"};
+
+function renderGrid(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const grid=document.getElementById('sellerGrid');
+  grid.innerHTML='';
+  const filtered=sellers.filter(s=>{
+    const katOk=activeKat==='semua'||s.kat===activeKat;
+    const qOk=!q||s.name.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q);
+    return katOk&&qOk;
+  });
+  if(!filtered.length){
+    grid.innerHTML='<div style="color:rgba(255,255,255,.6);font-size:13px;padding:1rem 0">Tidak ada seller ditemukan.</div>';
+    return;
+  }
+  filtered.forEach(s=>{
+    const el=document.createElement('div');
+    el.className='seller-card';
+    el.innerHTML=`
+      <div class="sc-img">${s.icon}
+        <span class="sc-badge${s.open?'':' tutup'}">${s.open?'Buka':'Tutup'}</span>
+        ${s.open?'<span class="sc-open"></span>':''}
+        <span class="sc-kat">${katLabel[s.kat]||s.kat}</span>
+      </div>
+      <div class="sc-body">
+        <div class="sc-name">${s.name}</div>
+        <div class="sc-desc">${s.desc}</div>
+        <div class="sc-meta">
+          <span class="sc-rating">★ ${s.rating}</span>
+          <span>${s.ulasan} ulasan</span>
+        </div>
+        <div class="sc-btn">
+          <button class="btn-pesan" onclick="openModal(${s.id})"><i class="ti ti-shopping-cart" aria-hidden="true"></i> Pesan</button>
+          <button class="btn-wa" onclick="hubungiWA(${s.id})" title="Chat WhatsApp"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></button>
+        </div>
+      </div>`;
+    grid.appendChild(el);
+  });
 }
 
-function renderMerchants(){
-merchantList.innerHTML=""
-sellers.filter(s=>s.desa===desa.value&&s.rt===rt.value)
-.forEach(s=>{
-merchantList.innerHTML+=`
-<div class="card merchant">
-<div class="logo">🍽️</div>
-<div style="flex:1">
-<b>${s.name}</b><br>
-<small>${s.menu.join(", ")}</small>
-</div>
-<button onclick="order('${s.name}')">Pesan</button>
-</div>`
-})
+function setKat(btn,kat){
+  document.querySelectorAll('.mp-nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.mp-cat').forEach(c=>c.classList.remove('active'));
+  activeKat=kat;
+  renderGrid();
+}
+function setKatCat(el,kat){
+  document.querySelectorAll('.mp-cat').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.mp-nav button').forEach(b=>b.classList.remove('active'));
+  activeKat=kat;
+  renderGrid();
 }
 
-function order(name){
-cart={seller:name,items:["Pesanan bebas"],desa:desa.value,rt:rt.value}
-orderInfo.innerHTML=`Pesan ke <b>${name}</b><br>${desa.value} - ${rt.value}`
-orderBox.classList.remove("hidden")
+function openModal(id){
+  selSeller=sellers.find(s=>s.id===id);
+  selMenus=[];
+  selPay='COD';
+  renderModal();
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
+function closeIfBg(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+
+function renderModal(){
+  document.getElementById('modalTitle').textContent='Pesan – '+selSeller.name;
+  const body=document.getElementById('modalBody');
+  body.innerHTML=`
+    <div class="seller-info">
+      <div class="seller-ava">${selSeller.icon}</div>
+      <div>
+        <div style="font-size:14px;font-weight:500">${selSeller.name}</div>
+        <div style="font-size:11px;color:#888;margin-top:2px">${katLabel[selSeller.kat]} · Kedungbanteng</div>
+        <div style="font-size:11px;color:#f59e0b;margin-top:2px">★ ${selSeller.rating} · ${selSeller.ulasan} ulasan</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#555;margin-bottom:6px;font-weight:500">Pilih Menu / Layanan:</div>
+    <div class="menu-list" id="menuList">
+      ${selSeller.menu.map((m,i)=>`
+        <div class="menu-item" onclick="toggleMenu(${i})" id="mi${i}">
+          <span class="menu-name">${m.n}</span>
+          <span class="menu-price">Rp${m.p.toLocaleString('id')}</span>
+        </div>`).join('')}
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nama Pemesan</label>
+      <input class="form-input" id="fNama" placeholder="Nama lengkap Anda">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nomor WhatsApp</label>
+      <input class="form-input" id="fWA" placeholder="08xx-xxxx-xxxx" type="tel">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Alamat Pengiriman</label>
+      <textarea class="form-input" id="fAlamat" placeholder="RT/RW, Dusun, Desa Kedungbanteng..." rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Catatan (opsional)</label>
+      <input class="form-input" id="fCatatan" placeholder="Pedas, tanpa bawang, dll...">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Metode Pembayaran</label>
+      <div class="pay-opts">
+        <button class="pay-opt sel" onclick="setPay(this,'COD')">💵 COD</button>
+        <button class="pay-opt" onclick="setPay(this,'QRIS')">📱 QRIS</button>
+        <button class="pay-opt" onclick="setPay(this,'Transfer Bank')">🏦 Transfer</button>
+        <button class="pay-opt" onclick="setPay(this,'E-Wallet')">💳 E-Wallet</button>
+      </div>
+    </div>
+    <div class="total-box" id="totalBox">
+      <div style="font-size:11px;color:#555">Total Pesanan</div>
+      <div id="totalVal" style="font-size:16px;font-weight:500;color:#0e4bbd"></div>
+    </div>
+    <button class="btn-order" onclick="kirimPesanan()"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Kirim Pesanan via WhatsApp</button>
+  `;
 }
 
-function kirim(){
-orders.push({...cart,by:current.wa,time:new Date().toLocaleString()})
-save()
-alert("Pesanan dikirim")
-orderBox.classList.add("hidden")
-renderOrders()
+function toggleMenu(i){
+  const el=document.getElementById('mi'+i);
+  const idx=selMenus.indexOf(i);
+  if(idx>-1){selMenus.splice(idx,1);el.classList.remove('selected');}
+  else{selMenus.push(i);el.classList.add('selected');}
+  const box=document.getElementById('totalBox');
+  if(!selMenus.length){box.style.display='none';return;}
+  const total=selMenus.reduce((a,i)=>a+selSeller.menu[i].p,0);
+  box.style.display='block';
+  document.getElementById('totalVal').textContent='Rp'+total.toLocaleString('id')+' ('+selMenus.length+' item)';
 }
 
-function renderOrders(){
-orderList.innerHTML=""
-orders.forEach(o=>{
-orderList.innerHTML+=`
-<div class="order-item">
-<b>${o.seller}</b><br>
-${o.desa} ${o.rt}<br>
-Pemesan: ${o.by}<br>
-${o.time}
-<hr>
-</div>`
-})
+function setPay(btn,pay){
+  document.querySelectorAll('.pay-opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  selPay=pay;
 }
 
-desa.onchange=rt.onchange=renderMerchants
+function kirimPesanan(){
+  const nama=document.getElementById('fNama').value.trim();
+  const wa=document.getElementById('fWA').value.trim();
+  const alamat=document.getElementById('fAlamat').value.trim();
+  const catatan=document.getElementById('fCatatan').value.trim();
+  if(!nama||!wa||!alamat){alert('Mohon lengkapi nama, nomor WA, dan alamat!');return;}
+  if(!selMenus.length){alert('Pilih minimal satu menu terlebih dahulu!');return;}
+  const items=selMenus.map(i=>'• '+selSeller.menu[i].n+' – Rp'+selSeller.menu[i].p.toLocaleString('id')).join('\n');
+  const total=selMenus.reduce((a,i)=>a+selSeller.menu[i].p,0);
+  const msg=`🛍️ *PESANAN BARU*\n*Kedungbanteng Apa Bae*\n\n`+
+    `🏪 ${selSeller.name}\n`+
+    `👤 Pemesan: ${nama}\n`+
+    `📱 WA: ${wa}\n`+
+    `📍 Alamat: ${alamat}\n\n`+
+    `📋 *Menu Dipesan:*\n${items}\n\n`+
+    `💰 Total: Rp${total.toLocaleString('id')}\n`+
+    `💳 Pembayaran: ${selPay}`+
+    (catatan?`\n📝 Catatan: ${catatan}`:'');
+  window.open('https://wa.me/'+selSeller.wa+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function hubungiWA(id){
+  const s=sellers.find(x=>x.id===id);
+  const msg=`Halo ${s.name}, saya mau tanya/pesan melalui Kedungbanteng Apa Bae. Boleh info lebih lanjut?`;
+  window.open('https://wa.me/'+s.wa+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+renderGrid();
 </script>
-</body>
-</html>
