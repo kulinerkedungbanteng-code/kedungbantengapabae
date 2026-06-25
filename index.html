@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Marketplace Desa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:system-ui;background:#f4f5f7}
+header{background:#e11d48;color:#fff;padding:14px;font-size:16px;font-weight:600}
+.container{padding:12px;max-width:900px;margin:auto}
+select,input,button{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:14px}
+button{background:#e11d48;color:#fff;border:none;font-weight:600}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:14px}
+.merchant{display:flex;gap:12px;align-items:center}
+.logo{width:52px;height:52px;border-radius:12px;background:#fde2e7;
+display:flex;align-items:center;justify-content:center;font-size:26px}
+.badge{font-size:11px;background:#22c55e;color:#fff;padding:3px 8px;border-radius:10px}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;
+border-top:1px solid #ddd;padding:10px}
+.hidden{display:none}
+.order-item{font-size:13px;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<header>🍔 Marketplace Desa</header>
+
+<div class="container">
+
+<!-- LOGIN -->
+<div class="card" id="loginBox">
+<h3>Login WhatsApp</h3>
+<select id="role">
+<option value="buyer">Pembeli</option>
+<option value="seller">Seller</option>
+<option value="admin">Admin</option>
+</select>
+<input id="wa" placeholder="628xxxxxx">
+<button onclick="login()">Masuk</button>
+<small>Tanpa password</small>
+</div>
+
+<!-- FILTER -->
+<div class="card hidden" id="filterBox">
+<select id="desa">
+<option>Kedungbanteng</option>
+<option>Margasari</option>
+</select>
+<select id="rt">
+<option>RT 01 / RW 01</option>
+<option>RT 02 / RW 05</option>
+</select>
+</div>
+
+<!-- MERCHANT LIST -->
+<div id="merchantList"></div>
+
+<!-- ADMIN -->
+<div class="card hidden" id="adminBox">
+<h3>📦 Order Masuk</h3>
+<div id="orderList"></div>
+</div>
+
+</div>
+
+<div class="bottom hidden" id="orderBox">
+<div id="orderInfo"></div>
+<button onclick="kirim()">Kirim ke Seller</button>
+</div>
+
+<script>
+let sellers=JSON.parse(localStorage.getItem("sellers")||`[
+{name:"Warung Bu Siti",wa:"628111",desa:"Kedungbanteng",rt:"RT 02 / RW 05",menu:["Soto","Pecel"]},
+{name:"Kedai Kopi",wa:"628222",desa:"Kedungbanteng",rt:"RT 01 / RW 01",menu:["Kopi","Teh"]}
+]`)
+let orders=JSON.parse(localStorage.getItem("orders")||"[]")
+let current=null,cart=null
+
+function save(){localStorage.setItem("sellers",JSON.stringify(sellers))
+localStorage.setItem("orders",JSON.stringify(orders))}
+
+function login(){
+current={role:role.value,wa:wa.value}
+loginBox.classList.add("hidden")
+filterBox.classList.remove("hidden")
+renderMerchants()
+if(current.role==="admin"){adminBox.classList.remove("hidden");renderOrders()}
+}
+
+function renderMerchants(){
+merchantList.innerHTML=""
+sellers.filter(s=>s.desa===desa.value&&s.rt===rt.value)
+.forEach(s=>{
+merchantList.innerHTML+=`
+<div class="card merchant">
+<div class="logo">🍽️</div>
+<div style="flex:1">
+<b>${s.name}</b><br>
+<small>${s.menu.join(", ")}</small>
+</div>
+<button onclick="order('${s.name}')">Pesan</button>
+</div>`
+})
+}
+
+function order(name){
+cart={seller:name,items:["Pesanan bebas"],desa:desa.value,rt:rt.value}
+orderInfo.innerHTML=`Pesan ke <b>${name}</b><br>${desa.value} - ${rt.value}`
+orderBox.classList.remove("hidden")
+}
+
+function kirim(){
+orders.push({...cart,by:current.wa,time:new Date().toLocaleString()})
+save()
+alert("Pesanan dikirim")
+orderBox.classList.add("hidden")
+renderOrders()
+}
+
+function renderOrders(){
+orderList.innerHTML=""
+orders.forEach(o=>{
+orderList.innerHTML+=`
+<div class="order-item">
+<b>${o.seller}</b><br>
+${o.desa} ${o.rt}<br>
+Pemesan: ${o.by}<br>
+${o.time}
+<hr>
+</div>`
+})
+}
+
+desa.onchange=rt.onchange=renderMerchants
+</script>
+</body>
+</html>
