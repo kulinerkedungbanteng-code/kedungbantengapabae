@@ -114,10 +114,29 @@ img,svg{display:block}
 .btn-order:active{background:var(--green-dark)}
 
 /* Summary box */
-.summary-box{background:#f0f5ff;border-radius:10px;padding:11px 13px;margin-bottom:.8rem;display:none;border:1px solid #c7d6fa}
+.summary-box{background:#f0f5ff;border-radius:10px;padding:11px 13px;margin-bottom:.8rem;border:1px solid #c7d6fa}
 .summary-row{display:flex;justify-content:space-between;font-size:12px;color:#555;margin-bottom:4px}
 .summary-row.total{font-size:14px;font-weight:800;color:var(--navy-deep);border-top:1px dashed #c7d6fa;padding-top:7px;margin-top:4px}
 .ongkir-info{font-size:10.5px;color:#888;margin-top:3px}
+
+/* 2-page modal */
+.modal-page{display:none}
+.modal-page.active{display:block}
+
+/* Floating total bar (page 1) */
+.float-total-bar{position:sticky;bottom:0;background:#fff;border-top:1px solid #e5e7eb;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;z-index:10;margin:0 -1.1rem -1.1rem}
+.ftb-info{flex:1;min-width:0}
+.ftb-qty{font-size:11px;color:#888;font-weight:600}
+.ftb-total{font-size:15px;font-weight:800;color:var(--navy-deep)}
+.btn-next{background:var(--blue);color:#fff;border:none;border-radius:9px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+
+/* Back button page 2 */
+.btn-back-page{background:#f1f3f7;color:#333;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:1rem}
+
+/* drag handle seller */
+.adm-card[draggable]{cursor:default}
+.adm-card .drag-handle-seller{cursor:grab;color:#b0b8cc;font-size:20px;flex-shrink:0;padding:4px 2px;touch-action:none}
+.adm-card .drag-handle-seller:active{cursor:grabbing}
 
 /* ===== ADMIN ===== */
 #adminApp{display:none;background:#f3f5fa;min-height:100vh}
@@ -185,6 +204,34 @@ img,svg{display:block}
 .field-row{display:flex;gap:8px}
 .field-row .form-group{flex:1}
 .help-txt{font-size:10.5px;color:#9aa3b2;margin-top:3px}
+
+/* ===== JAM OPERASIONAL ===== */
+.jam-row{display:flex;gap:8px;align-items:center}
+.jam-row .form-input{flex:1}
+.jam-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;margin-left:6px}
+.jam-badge.open-now{background:#dcfce7;color:#16a34a}
+.jam-badge.closed-now{background:#fee2e2;color:#dc2626}
+
+/* ===== IMAGE UPLOAD ===== */
+.img-upload-area{border:2px dashed #c7d6fa;border-radius:10px;padding:14px;text-align:center;cursor:pointer;background:#f8faff;transition:all .15s;position:relative;overflow:hidden}
+.img-upload-area:hover{border-color:var(--blue);background:#eef2ff}
+.img-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.img-upload-area .iu-icon{font-size:24px;color:#9aa3b2;margin-bottom:4px}
+.img-upload-area .iu-label{font-size:11px;color:#9aa3b2;font-weight:600}
+.img-upload-area .iu-hint{font-size:10px;color:#b0b8cc;margin-top:2px}
+.img-preview{width:100%;max-height:120px;object-fit:cover;border-radius:8px;margin-top:8px;display:none}
+.img-preview.show{display:block}
+.img-remove-btn{display:none;margin-top:6px;background:#fef2f2;color:#dc2626;border:none;border-radius:6px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;width:100%}
+.img-remove-btn.show{display:block}
+
+/* Product image in menu */
+.menu-row-img{width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid #e5e7eb}
+.menu-row-img-placeholder{width:36px;height:36px;border-radius:6px;flex-shrink:0;background:#f0f2f7;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid #e5e7eb;cursor:pointer;position:relative;overflow:hidden}
+.menu-row-img-placeholder input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.sc-img img.seller-photo{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.sc-img{position:relative}
+.seller-ava img.seller-photo{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.menu-item-img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid #e5e7eb}
 </style>
 </head>
 <body>
@@ -318,11 +365,15 @@ img,svg{display:block}
         <div class="form-group"><label class="form-label">Deskripsi Banner</label><input class="form-input" id="setBannerDesc"></div>
         <button class="btn-order" style="background:var(--blue)" onclick="saveSettings()"><i class="ti ti-device-floppy"></i> Simpan Pengaturan</button>
 
-        <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-truck-delivery"></i> Pengaturan Ongkos Kirim</div>
-        <div class="help-txt" style="margin-bottom:10px">Masukkan pilihan ongkos kirim yang akan tampil saat pelanggan memesan.</div>
+        <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-clock"></i> Jam Operasional</div>
+        <div style="background:#f0f5ff;border-radius:10px;padding:12px;font-size:12px;color:#444;margin-bottom:1rem;border:1px solid #c7d6fa">
+          <b>ℹ️ Cara mengatur jam operasional seller:</b><br>Buka tab <b>Seller</b> → klik <b>Edit</b> pada seller → aktifkan <i>"Jam Operasional Otomatis"</i> lalu atur jam buka & tutup.<br><br>
+          Seller yang di luar jam operasional akan <b>otomatis tersembunyi</b> dari tampilan website pengunjung.
+        </div>
+
+        <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-truck-delivery"></i> Ongkos Kirim per Desa</div>
+        <div class="help-txt" style="margin-bottom:10px">Ongkos kirim otomatis berdasarkan desa tujuan pelanggan.</div>
         <div id="ongkirList"></div>
-        <button class="btn-add" style="padding:9px 14px;font-size:12px;margin-bottom:1rem" onclick="addOngkir()"><i class="ti ti-plus"></i> Tambah Opsi Ongkos Kirim</button>
-        <button class="btn-order" style="background:var(--blue)" onclick="saveOngkir()"><i class="ti ti-device-floppy"></i> Simpan Ongkos Kirim</button>
 
         <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-key"></i> Keamanan</div>
         <div class="form-group"><label class="form-label">Ubah Kata Sandi Admin</label><input class="form-input" id="setNewPass" type="password" placeholder="Kata sandi baru"></div>
@@ -330,6 +381,11 @@ img,svg{display:block}
 
         <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-database"></i> Data</div>
         <button class="btn-order" style="background:#6b7280" onclick="resetData()"><i class="ti ti-refresh"></i> Reset ke Data Default</button>
+
+        <div class="mp-section-title" style="color:var(--ink);margin-top:1.5rem"><i class="ti ti-download"></i> Export & Backup</div>
+        <div class="help-txt" style="margin-bottom:10px">Download file HTML terbaru dengan semua data seller, produk, dan pengaturan yang sudah diubah. Gunakan file ini untuk menggantikan file lama di server/hosting.</div>
+        <button class="btn-order" style="background:var(--green-dark);margin-bottom:.5rem" onclick="exportHTML()"><i class="ti ti-file-download"></i> Download HTML Terbaru</button>
+        <button class="btn-order" style="background:var(--navy)" onclick="exportJSON()"><i class="ti ti-file-code"></i> Export Data JSON (Backup)</button>
       </div>
     </div>
   </div>
@@ -349,6 +405,18 @@ img,svg{display:block}
         </div>
         <div class="form-group"><label class="form-label">Ikon (emoji)</label><input class="form-input" id="sfIcon" placeholder="🍛" maxlength="4"></div>
       </div>
+      <!-- Foto Seller -->
+      <div class="form-group">
+        <label class="form-label">Foto Seller (JPG, PNG, SVG)</label>
+        <div class="img-upload-area" id="sfImgArea" onclick="document.getElementById('sfImgFile').click()">
+          <input type="file" id="sfImgFile" accept=".jpg,.jpeg,.png,.svg,image/jpeg,image/png,image/svg+xml" style="display:none" onchange="handleSellerImgUpload(this)">
+          <div class="iu-icon"><i class="ti ti-photo-up"></i></div>
+          <div class="iu-label">Klik untuk upload foto</div>
+          <div class="iu-hint">JPG, PNG, SVG • Maks 2MB</div>
+        </div>
+        <img class="img-preview" id="sfImgPreview" alt="Preview">
+        <button class="img-remove-btn" id="sfImgRemove" onclick="removeSellerImg()">✕ Hapus Foto</button>
+      </div>
       <div class="form-group"><label class="form-label">Deskripsi Singkat</label><input class="form-input" id="sfDesc" placeholder="Nasi kotak, lauk pauk, dll"></div>
       <div class="field-row">
         <div class="form-group"><label class="form-label">Rating (0-5)</label><input class="form-input" id="sfRating" placeholder="4.8"></div>
@@ -358,6 +426,23 @@ img,svg{display:block}
       <div class="form-group" style="display:flex;align-items:center;justify-content:space-between">
         <label class="form-label" style="margin:0">Status Buka</label>
         <button type="button" class="adm-toggle on" id="sfOpenToggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <!-- JAM OPERASIONAL -->
+      <div class="form-group">
+        <label class="form-label" style="display:flex;align-items:center;gap:6px">
+          <i class="ti ti-clock" style="font-size:13px"></i> Jam Operasional
+          <span class="jam-badge" id="sfJamStatus"></span>
+        </label>
+        <div class="jam-row" style="margin-bottom:6px">
+          <input class="form-input" type="time" id="sfJamBuka" value="07:00" onchange="updateJamStatus()">
+          <span style="font-size:12px;color:#888;flex-shrink:0">s/d</span>
+          <input class="form-input" type="time" id="sfJamTutup" value="21:00" onchange="updateJamStatus()">
+        </div>
+        <div class="help-txt">Toko akan otomatis tampil <b>Tutup</b> di luar jam ini. Kosongkan jam jika tidak ingin pembatasan otomatis.</div>
+        <label style="display:flex;align-items:center;gap:7px;margin-top:6px;cursor:pointer">
+          <input type="checkbox" id="sfJamAktif" onchange="updateJamStatus()" style="width:15px;height:15px;accent-color:var(--blue)">
+          <span style="font-size:12px;color:#444;font-weight:600">Aktifkan jam operasional otomatis</span>
+        </label>
       </div>
       <button class="btn-order" style="background:var(--blue)" onclick="saveSellerForm()"><i class="ti ti-device-floppy"></i> Simpan Seller</button>
     </div>
@@ -371,11 +456,22 @@ img,svg{display:block}
 const STORAGE_KEY='kab_marketplace_data_v2';
 const PASS_KEY='kab_admin_pass_v1';
 
+/* Ongkir per desa — key = nama desa */
+const DESA_ONGKIR={
+  "Desa Kedungbanteng":3000,
+  "Desa Dukuhjati Wetan":4000,
+  "Desa Tonggara":4000,
+  "Desa Sumingkir":5000,
+  "Desa Paketiban":4000
+};
+const DESA_LIST=Object.keys(DESA_ONGKIR);
+
 const defaultOngkir=[
-  {label:"Dalam Desa",harga:3000},
-  {label:"Luar Desa (< 5km)",harga:8000},
-  {label:"Luar Kota",harga:20000},
-  {label:"Gratis Ongkir",harga:0}
+  {label:"Desa Kedungbanteng",harga:3000},
+  {label:"Desa Dukuhjati Wetan",harga:4000},
+  {label:"Desa Tonggara",harga:4000},
+  {label:"Desa Sumingkir",harga:5000},
+  {label:"Desa Paketiban",harga:4000}
 ];
 
 const defaultSellers=[
@@ -420,6 +516,10 @@ function loadData(){
 }
 function saveData(){ localStorage.setItem(STORAGE_KEY,JSON.stringify(DATA)); }
 let DATA=loadData();
+// Restore admin-edited desa ongkir rates from saved data
+if(DATA.ongkir&&DATA.ongkir.length){
+  DATA.ongkir.forEach(o=>{ if(DESA_ONGKIR.hasOwnProperty(o.label)) DESA_ONGKIR[o.label]=o.harga; });
+}
 
 function getPass(){ return localStorage.getItem(PASS_KEY)||'admin123'; }
 const katLabel={warung:"Warung",kedai:"Kedai",toko:"Toko",jasa:"Jasa"};
@@ -463,6 +563,21 @@ function applySettingsToStore(){
   document.getElementById('bannerDesc').textContent=DATA.settings.bannerDesc;
 }
 
+function isSellerOpenNow(s){
+  // Check jam operasional if active
+  if(s.jamAktif && s.jamBuka && s.jamTutup){
+    const now=new Date();
+    const hh=now.getHours(), mm=now.getMinutes();
+    const cur=hh*60+mm;
+    const [bh,bm]=s.jamBuka.split(':').map(Number);
+    const [th,tm]=s.jamTutup.split(':').map(Number);
+    const buka=bh*60+bm, tutup=th*60+tm;
+    if(tutup>buka) return cur>=buka && cur<tutup;
+    else return cur>=buka || cur<tutup; // melewati tengah malam
+  }
+  return s.open;
+}
+
 function renderGrid(){
   const q=document.getElementById('searchInput').value.toLowerCase();
   const grid=document.getElementById('sellerGrid');
@@ -470,20 +585,25 @@ function renderGrid(){
   const filtered=DATA.sellers.filter(s=>{
     const katOk=activeKat==='semua'||s.kat===activeKat;
     const qOk=!q||s.name.toLowerCase().includes(q)||s.desc.toLowerCase().includes(q);
-    return katOk&&qOk;
+    const openOk=isSellerOpenNow(s); // hide if closed by jam operasional
+    return katOk&&qOk&&(openOk||!s.jamAktif||s.open);
   });
   if(!filtered.length){
     grid.innerHTML='<div class="empty-state"><i class="ti ti-mood-sad-2"></i>Tidak ada seller ditemukan.</div>';
     return;
   }
   filtered.forEach(s=>{
+    const openNow=isSellerOpenNow(s);
     const el=document.createElement('div');
     el.className='seller-card';
     el.onclick=(e)=>{ if(!e.target.closest('button')) openModal(s.id); };
+    const imgContent=s.photo
+      ? `<img src="${s.photo}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" alt="${s.name}">`
+      : s.icon;
     el.innerHTML=`
-      <div class="sc-img">${s.icon}
-        <span class="sc-badge${s.open?'':' tutup'}">${s.open?'Buka':'Tutup'}</span>
-        ${s.open?'<span class="sc-open"></span>':''}
+      <div class="sc-img" style="position:relative;overflow:hidden">${imgContent}
+        <span class="sc-badge${openNow?'':' tutup'}">${openNow?'Buka':'Tutup'}</span>
+        ${openNow?'<span class="sc-open"></span>':''}
         <span class="sc-kat">${katLabel[s.kat]||s.kat}</span>
       </div>
       <div class="sc-body">
@@ -519,7 +639,7 @@ function setKatCat(el,kat){
 
 function openModal(id){
   selSeller=DATA.sellers.find(s=>s.id===id);
-  menuQty={}; selPay='COD'; selOngkir=DATA.ongkir&&DATA.ongkir.length?DATA.ongkir[0]:null;
+  menuQty={}; selPay='COD'; selOngkir=null;
   renderModal();
   document.getElementById('modalOverlay').classList.add('show');
 }
@@ -529,78 +649,136 @@ function closeIfBg(e){if(e.target===document.getElementById('modalOverlay'))clos
 function renderModal(){
   document.getElementById('modalTitle').textContent='Pesan – '+selSeller.name;
   const body=document.getElementById('modalBody');
-  const ongkirOpts=(DATA.ongkir||[]).map((o,i)=>`
-    <button class="pay-opt${i===0?' sel':''}" onclick="setOngkir(this,${i})">${o.label} – Rp${o.harga.toLocaleString('id')}</button>
-  `).join('');
+  const sellerAvaContent=selSeller.photo
+    ? `<img src="${selSeller.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:12px" alt="${selSeller.name}">`
+    : selSeller.icon;
   body.innerHTML=`
-    <div class="seller-info">
-      <div class="seller-ava">${selSeller.icon}</div>
-      <div>
-        <div style="font-size:14px;font-weight:700">${selSeller.name}</div>
-        <div style="font-size:11px;color:#888;margin-top:2px">${katLabel[selSeller.kat]} · Kedungbanteng</div>
-        <div style="font-size:11px;color:#f59e0b;margin-top:2px">★ ${selSeller.rating} · ${selSeller.ulasan} ulasan</div>
+    <!-- PAGE 1: Pilih Menu -->
+    <div class="modal-page active" id="modalPage1">
+      <div class="seller-info">
+        <div class="seller-ava" style="overflow:hidden">${sellerAvaContent}</div>
+        <div>
+          <div style="font-size:14px;font-weight:700">${selSeller.name}</div>
+          <div style="font-size:11px;color:#888;margin-top:2px">${katLabel[selSeller.kat]} · Kedungbanteng</div>
+          <div style="font-size:11px;color:#f59e0b;margin-top:2px">★ ${selSeller.rating} · ${selSeller.ulasan} ulasan</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#555;margin-bottom:8px;font-weight:700">📋 Pilih Menu / Layanan:</div>
+      <div class="menu-list" id="menuList">
+        ${selSeller.menu.map((m,i)=>`
+          <div class="menu-item" id="mi${i}">
+            ${m.img?`<img src="${m.img}" class="menu-item-img" alt="${m.n}">`:''}
+            <div class="menu-item-left" onclick="toggleMenu(${i})">
+              <div class="menu-name">${m.n}</div>
+              <div class="menu-price">Rp${m.p.toLocaleString('id')} / pcs</div>
+            </div>
+            <div class="qty-ctrl">
+              <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+              <span class="qty-val" id="qv${i}">0</span>
+              <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+            </div>
+          </div>`).join('')}
+      </div>
+      <!-- Floating total bar -->
+      <div class="float-total-bar" id="floatBar" style="display:none">
+        <div class="ftb-info">
+          <div class="ftb-qty" id="ftbQty">0 item dipilih</div>
+          <div class="ftb-total" id="ftbTotal">Rp0</div>
+        </div>
+        <button class="btn-next" onclick="goToPage2()"><i class="ti ti-arrow-right"></i> Lanjut Isi Data</button>
       </div>
     </div>
-    <div style="font-size:12px;color:#555;margin-bottom:8px;font-weight:700">📋 Pilih Menu / Layanan:</div>
-    <div class="menu-list" id="menuList">
-      ${selSeller.menu.map((m,i)=>`
-        <div class="menu-item" id="mi${i}">
-          <div class="menu-item-left" onclick="toggleMenu(${i})">
-            <div class="menu-name">${m.n}</div>
-            <div class="menu-price">Rp${m.p.toLocaleString('id')} / pcs</div>
-          </div>
-          <div class="qty-ctrl">
-            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
-            <span class="qty-val" id="qv${i}">0</span>
-            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
-          </div>
-        </div>`).join('')}
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nama Pemesan</label>
-      <input class="form-input" id="fNama" placeholder="Nama lengkap Anda">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nomor WhatsApp</label>
-      <input class="form-input" id="fWA" placeholder="08xx-xxxx-xxxx" type="tel">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Alamat Pengiriman</label>
-      <textarea class="form-input" id="fAlamat" placeholder="RT/RW, Dusun, Desa Kedungbanteng..." rows="2"></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Catatan (opsional)</label>
-      <input class="form-input" id="fCatatan" placeholder="Pedas, tanpa bawang, dll...">
-    </div>
-    ${DATA.ongkir&&DATA.ongkir.length?`
-    <div class="form-group">
-      <label class="form-label">🚚 Ongkos Kirim</label>
-      <div class="pay-opts" id="ongkirOpts">${ongkirOpts}</div>
-    </div>`:''}
-    <div class="form-group">
-      <label class="form-label">Metode Pembayaran</label>
-      <div class="pay-opts">
-        <button class="pay-opt sel" onclick="setPay(this,'COD')">💵 COD</button>
-        <button class="pay-opt" onclick="setPay(this,'QRIS')">📱 QRIS</button>
-        <button class="pay-opt" onclick="setPay(this,'Transfer Bank')">🏦 Transfer</button>
-        <button class="pay-opt" onclick="setPay(this,'E-Wallet')">💳 E-Wallet</button>
+
+    <!-- PAGE 2: Detail Pemesan -->
+    <div class="modal-page" id="modalPage2">
+      <button class="btn-back-page" onclick="goToPage1()"><i class="ti ti-arrow-left"></i> Kembali Pilih Menu</button>
+
+      <!-- Ringkasan pesanan -->
+      <div class="summary-box" id="summaryBox" style="display:block">
+        <div style="font-size:11.5px;font-weight:700;color:var(--navy-deep);margin-bottom:6px">🧾 Ringkasan Pesanan</div>
+        <div id="summaryItems"></div>
+        <div class="summary-row"><span>Subtotal</span><span id="subtotalVal">Rp0</span></div>
+        <div class="summary-row" id="ongkirRow" style="display:none">
+          <span>Ongkos Kirim</span><span id="ongkirVal">Rp0</span>
+        </div>
+        <div class="summary-row total"><span>💰 Total Bayar</span><span id="totalVal">Rp0</span></div>
       </div>
+
+      <div class="form-group">
+        <label class="form-label">Nama Pemesan</label>
+        <input class="form-input" id="fNama" placeholder="Nama lengkap Anda">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nomor WhatsApp</label>
+        <input class="form-input" id="fWA" placeholder="08xx-xxxx-xxxx" type="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">📍 Desa Tujuan</label>
+        <select class="form-input" id="fDesa" onchange="onDesaChange()">
+          <option value="">— Pilih Desa —</option>
+          ${DESA_LIST.map(d=>`<option value="${d}">${d}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field-row">
+        <div class="form-group">
+          <label class="form-label">RT</label>
+          <select class="form-input" id="fRT">
+            <option value="">RT</option>
+            ${Array.from({length:36},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">RT ${String(i+1).padStart(2,'0')}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">RW</label>
+          <select class="form-input" id="fRW">
+            <option value="">RW</option>
+            ${Array.from({length:20},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">RW ${String(i+1).padStart(2,'0')}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Patokan / Detail Alamat</label>
+        <input class="form-input" id="fPatokan" placeholder="Contoh: Depan masjid, samping SD, dll...">
+      </div>
+      <div class="form-group" id="ongkirDesakomp" style="display:none">
+        <label class="form-label">🚚 Ongkos Kirim</label>
+        <div style="background:#f0f5ff;border:1.5px solid #c7d6fa;border-radius:8px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between">
+          <span id="ongkirDesaLabel" style="font-size:13px;color:#555;font-weight:600"></span>
+          <span id="ongkirDesaHarga" style="font-size:14px;font-weight:800;color:var(--blue)"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Catatan (opsional)</label>
+        <input class="form-input" id="fCatatan" placeholder="Pedas, tanpa bawang, dll...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Metode Pembayaran</label>
+        <div class="pay-opts">
+          <button class="pay-opt sel" onclick="setPay(this,'COD')">💵 COD</button>
+          <button class="pay-opt" onclick="setPay(this,'QRIS')">📱 QRIS</button>
+          <button class="pay-opt" onclick="setPay(this,'Transfer Bank')">🏦 Transfer</button>
+          <button class="pay-opt" onclick="setPay(this,'E-Wallet')">💳 E-Wallet</button>
+        </div>
+      </div>
+      <button class="btn-order" onclick="kirimPesanan()"><i class="ti ti-brand-whatsapp"></i> Kirim Pesanan via WhatsApp</button>
     </div>
-    <div class="summary-box" id="summaryBox">
-      <div id="summaryItems"></div>
-      <div class="summary-row">
-        <span>Subtotal</span><span id="subtotalVal">Rp0</span>
-      </div>
-      <div class="summary-row" id="ongkirRow" style="display:none">
-        <span>Ongkos Kirim</span><span id="ongkirVal">Rp0</span>
-      </div>
-      <div class="summary-row total">
-        <span>💰 Total Bayar</span><span id="totalVal">Rp0</span>
-      </div>
-    </div>
-    <button class="btn-order" onclick="kirimPesanan()"><i class="ti ti-brand-whatsapp"></i> Kirim Pesanan via WhatsApp</button>
   `;
-  selOngkir=DATA.ongkir&&DATA.ongkir.length?DATA.ongkir[0]:null;
+  selOngkir=null;
+  updateSummary();
+}
+
+function goToPage1(){
+  document.getElementById('modalPage1').classList.add('active');
+  document.getElementById('modalPage2').classList.remove('active');
+  document.getElementById('modalTitle').textContent='Pesan – '+selSeller.name;
+  document.getElementById('modalBox').scrollTop=0;
+}
+function goToPage2(){
+  const hasItems=Object.values(menuQty).some(q=>q>0);
+  if(!hasItems){alert('Pilih minimal satu menu terlebih dahulu!');return;}
+  document.getElementById('modalPage1').classList.remove('active');
+  document.getElementById('modalPage2').classList.add('active');
+  document.getElementById('modalTitle').textContent='Detail Pemesan';
+  document.getElementById('modalBox').scrollTop=0;
   updateSummary();
 }
 
@@ -622,9 +800,20 @@ function toggleMenu(i){
 
 function updateSummary(){
   const hasItems=Object.values(menuQty).some(q=>q>0);
+  // Update float bar on page 1
+  const floatBar=document.getElementById('floatBar');
+  if(floatBar){
+    floatBar.style.display=hasItems?'flex':'none';
+    let totalQty=0, subTotal1=0;
+    selSeller.menu.forEach((m,i)=>{const q=menuQty[i]||0;totalQty+=q;subTotal1+=m.p*q;});
+    const ftbQty=document.getElementById('ftbQty');
+    const ftbTotal=document.getElementById('ftbTotal');
+    if(ftbQty) ftbQty.textContent=totalQty+' item dipilih';
+    if(ftbTotal) ftbTotal.textContent='Rp'+subTotal1.toLocaleString('id');
+  }
+  // Update summary on page 2
   const box=document.getElementById('summaryBox');
-  if(!hasItems){box.style.display='none';return;}
-  box.style.display='block';
+  if(!box) return;
   let subtotal=0;
   let itemsHtml='';
   selSeller.menu.forEach((m,i)=>{
@@ -635,26 +824,42 @@ function updateSummary(){
       itemsHtml+=`<div class="summary-row"><span>${m.n} x${q}</span><span>Rp${sub.toLocaleString('id')}</span></div>`;
     }
   });
-  document.getElementById('summaryItems').innerHTML=itemsHtml;
-  document.getElementById('subtotalVal').textContent='Rp'+subtotal.toLocaleString('id');
+  const sumItems=document.getElementById('summaryItems');
+  if(sumItems) sumItems.innerHTML=itemsHtml||'';
+  const subtotalEl=document.getElementById('subtotalVal');
+  if(subtotalEl) subtotalEl.textContent='Rp'+subtotal.toLocaleString('id');
   const ongkirHarga=selOngkir?selOngkir.harga:0;
   const ongkirRow=document.getElementById('ongkirRow');
-  if(selOngkir&&DATA.ongkir&&DATA.ongkir.length){
-    ongkirRow.style.display='flex';
-    document.getElementById('ongkirVal').textContent='Rp'+ongkirHarga.toLocaleString('id');
-  } else {
-    ongkirRow.style.display='none';
+  if(ongkirRow){
+    if(selOngkir){
+      ongkirRow.style.display='flex';
+      document.getElementById('ongkirVal').textContent='Rp'+ongkirHarga.toLocaleString('id')+' ('+selOngkir.label+')';
+    } else {
+      ongkirRow.style.display='none';
+    }
   }
   const total=subtotal+ongkirHarga;
-  document.getElementById('totalVal').textContent='Rp'+total.toLocaleString('id');
+  const totalEl=document.getElementById('totalVal');
+  if(totalEl) totalEl.textContent='Rp'+total.toLocaleString('id');
 }
 
-function setOngkir(btn,idx){
-  document.querySelectorAll('#ongkirOpts .pay-opt').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-  selOngkir=DATA.ongkir[idx];
+function onDesaChange(){
+  const desa=document.getElementById('fDesa').value;
+  const komp=document.getElementById('ongkirDesakomp');
+  if(!desa){
+    komp.style.display='none';
+    selOngkir=null;
+  } else {
+    const harga=DESA_ONGKIR[desa]||0;
+    selOngkir={label:desa,harga};
+    document.getElementById('ongkirDesaLabel').textContent=desa;
+    document.getElementById('ongkirDesaHarga').textContent='Rp'+harga.toLocaleString('id');
+    komp.style.display='block';
+  }
   updateSummary();
 }
+
+
 function setPay(btn,pay){
   document.querySelectorAll('.pay-opts .pay-opt').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel'); selPay=pay;
@@ -663,12 +868,18 @@ function setPay(btn,pay){
 function kirimPesanan(){
   const nama=document.getElementById('fNama').value.trim();
   const wa=document.getElementById('fWA').value.trim();
-  const alamat=document.getElementById('fAlamat').value.trim();
+  const desa=document.getElementById('fDesa').value;
+  const rt=document.getElementById('fRT').value;
+  const rw=document.getElementById('fRW').value;
+  const patokan=document.getElementById('fPatokan').value.trim();
   const catatan=document.getElementById('fCatatan').value.trim();
-  if(!nama||!wa||!alamat){alert('Mohon lengkapi nama, nomor WA, dan alamat!');return;}
+  if(!nama||!wa){alert('Mohon lengkapi nama dan nomor WA!');return;}
+  if(!desa){alert('Mohon pilih Desa tujuan pengiriman!');return;}
+  if(!rt||!rw){alert('Mohon pilih RT dan RW!');return;}
   const hasItems=Object.values(menuQty).some(q=>q>0);
   if(!hasItems){alert('Pilih minimal satu menu terlebih dahulu!');return;}
 
+  const alamatFull=`${desa}, RT ${rt}/RW ${rw}${patokan?' – '+patokan:''}`;
   const orderId=generateOrderId();
   const dt=getNow();
   let subtotal=0;
@@ -696,7 +907,7 @@ function kirimPesanan(){
 🏪 Seller    : ${selSeller.name}
 👤 Pemesan   : ${nama}
 📱 WA        : ${wa}
-📍 Alamat    : ${alamat}
+📍 Alamat    : ${alamatFull}
 ━━━━━━━━━━━━━━━━━━
 📋 *Detail Pesanan:*
 ${items}
@@ -764,17 +975,21 @@ function renderDashboard(){
   document.getElementById('statProducts').textContent=s.reduce((a,x)=>a+x.menu.length,0);
   document.getElementById('statKat').textContent=new Set(s.map(x=>x.kat)).size;
   const list=document.getElementById('dashList');
-  list.innerHTML=s.map(x=>`
+  list.innerHTML=s.map(x=>{
+    const openNow=isSellerOpenNow(x);
+    const avaContent=x.photo?`<img src="${x.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">`:`<span style="font-size:21px">${x.icon}</span>`;
+    return `
     <div class="adm-card">
       <div class="adm-card-top">
-        <div class="adm-ava">${x.icon}</div>
+        <div class="adm-ava" style="overflow:hidden">${avaContent}</div>
         <div class="adm-card-info">
           <div class="nm">${x.name}</div>
-          <div class="mt">${katLabel[x.kat]} · ${x.menu.length} produk · ★${x.rating}</div>
+          <div class="mt">${katLabel[x.kat]} · ${x.menu.length} produk · ★${x.rating}${x.jamAktif?` · ⏰ ${x.jamBuka}–${x.jamTutup}`:''}</div>
         </div>
-        <span class="sc-badge${x.open?'':' tutup'}" style="position:static">${x.open?'Buka':'Tutup'}</span>
+        <span class="sc-badge${openNow?'':' tutup'}" style="position:static">${openNow?'Buka':'Tutup'}</span>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ===================== ADMIN: SELLERS (with drag-sort) ===================== */
@@ -783,23 +998,28 @@ function renderAdminSellers(){
   const list=document.getElementById('adminSellerList');
   const filtered=DATA.sellers.filter(x=>x.name.toLowerCase().includes(q));
   if(!filtered.length){ list.innerHTML='<div class="empty-state"><i class="ti ti-building-store"></i>Belum ada seller.</div>'; return; }
-  list.innerHTML=filtered.map(x=>`
+  list.innerHTML=filtered.map(x=>{
+    const openNow=isSellerOpenNow(x);
+    const jamInfo=x.jamAktif?`<span style="font-size:10px;color:${openNow?'#16a34a':'#dc2626'};font-weight:700;margin-left:4px">⏰ ${x.jamBuka}–${x.jamTutup}</span>`:'';
+    const avaContent=x.photo?`<img src="${x.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:10px" alt="">`:`<span style="font-size:21px">${x.icon}</span>`;
+    return `
     <div class="adm-card" draggable="true" data-id="${x.id}">
       <div class="adm-card-top">
         <span class="drag-handle ti ti-grip-vertical" title="Geser untuk atur urutan"></span>
-        <div class="adm-ava">${x.icon}</div>
+        <div class="adm-ava" style="overflow:hidden">${avaContent}</div>
         <div class="adm-card-info">
           <div class="nm">${x.name}</div>
-          <div class="mt">${katLabel[x.kat]} · ${x.menu.length} produk · WA ${x.wa}</div>
+          <div class="mt">${katLabel[x.kat]} · ${x.menu.length} produk · WA ${x.wa}${jamInfo}</div>
         </div>
-        <button class="adm-toggle ${x.open?'on':''}" onclick="toggleSellerOpen(${x.id})"></button>
+        <button class="adm-toggle ${openNow?'on':''}" onclick="toggleSellerOpen(${x.id})"></button>
       </div>
       <div class="adm-card-actions">
         <button class="adm-btn-sm adm-btn-edit" onclick="openSellerForm(${x.id})"><i class="ti ti-edit"></i> Edit</button>
         <button class="adm-btn-sm adm-btn-menu" onclick="goToProductsFor(${x.id})"><i class="ti ti-box"></i> Produk</button>
         <button class="adm-btn-sm adm-btn-del" onclick="deleteSeller(${x.id})"><i class="ti ti-trash"></i> Hapus</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   initSellerDrag(list, filtered, q);
 }
 
@@ -884,6 +1104,7 @@ function deleteSeller(id){
   DATA.sellers=DATA.sellers.filter(x=>x.id!==id); saveData(); renderAdminSellers(); showToast('Seller dihapus');
 }
 let editingSellerId=null;
+let sfCurrentPhoto=null;
 function openSellerForm(id){
   editingSellerId=id;
   const s=id?DATA.sellers.find(x=>x.id===id):null;
@@ -897,19 +1118,80 @@ function openSellerForm(id){
   document.getElementById('sfWA').value=s?s.wa:'62';
   const tog=document.getElementById('sfOpenToggle');
   tog.classList.toggle('on', s?s.open:true);
+  // Jam operasional
+  document.getElementById('sfJamBuka').value=s&&s.jamBuka?s.jamBuka:'07:00';
+  document.getElementById('sfJamTutup').value=s&&s.jamTutup?s.jamTutup:'21:00';
+  document.getElementById('sfJamAktif').checked=s?!!s.jamAktif:false;
+  // Photo
+  sfCurrentPhoto=s&&s.photo?s.photo:null;
+  const preview=document.getElementById('sfImgPreview');
+  const removeBtn=document.getElementById('sfImgRemove');
+  if(sfCurrentPhoto){ preview.src=sfCurrentPhoto; preview.classList.add('show'); removeBtn.classList.add('show'); }
+  else { preview.src=''; preview.classList.remove('show'); removeBtn.classList.remove('show'); }
+  updateJamStatus();
   document.getElementById('sellerSheet').classList.add('show');
+}
+function updateJamStatus(){
+  const aktif=document.getElementById('sfJamAktif').checked;
+  const badge=document.getElementById('sfJamStatus');
+  if(!aktif){ badge.textContent=''; badge.className='jam-badge'; return; }
+  const buka=document.getElementById('sfJamBuka').value;
+  const tutup=document.getElementById('sfJamTutup').value;
+  const now=new Date(); const hh=now.getHours(),mm=now.getMinutes(); const cur=hh*60+mm;
+  if(buka&&tutup){
+    const [bh,bm]=buka.split(':').map(Number);
+    const [th,tm]=tutup.split(':').map(Number);
+    const b=bh*60+bm, t=th*60+tm;
+    const openNow=(t>b)?cur>=b&&cur<t:cur>=b||cur<t;
+    badge.textContent=openNow?'⏰ Buka Sekarang':'⏰ Tutup Sekarang';
+    badge.className='jam-badge '+(openNow?'open-now':'closed-now');
+  }
+}
+function handleSellerImgUpload(input){
+  const file=input.files[0]; if(!file) return;
+  if(file.size>2*1024*1024){ alert('Ukuran file maks 2MB'); return; }
+  const reader=new FileReader();
+  reader.onload=e=>{
+    sfCurrentPhoto=e.target.result;
+    const preview=document.getElementById('sfImgPreview');
+    preview.src=sfCurrentPhoto; preview.classList.add('show');
+    document.getElementById('sfImgRemove').classList.add('show');
+  };
+  reader.readAsDataURL(file);
+}
+function removeSellerImg(){
+  sfCurrentPhoto=null;
+  document.getElementById('sfImgPreview').src=''; document.getElementById('sfImgPreview').classList.remove('show');
+  document.getElementById('sfImgRemove').classList.remove('show');
+  document.getElementById('sfImgFile').value='';
+}
+function handleMenuImgUpload(sellerId,idx,input){
+  const file=input.files[0]; if(!file) return;
+  if(file.size>2*1024*1024){ alert('Ukuran file maks 2MB'); return; }
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const s=DATA.sellers.find(x=>x.id===sellerId);
+    s.menu[idx].img=e.target.result;
+    saveData(); renderProductManager(); showToast('Foto produk disimpan ✓');
+  };
+  reader.readAsDataURL(file);
 }
 function saveSellerForm(){
   const name=document.getElementById('sfName').value.trim();
   const wa=document.getElementById('sfWA').value.trim();
   if(!name||!wa){ alert('Nama seller dan nomor WhatsApp wajib diisi.'); return; }
+  const jamAktif=document.getElementById('sfJamAktif').checked;
   const payload={
     name, kat:document.getElementById('sfKat').value,
     icon:document.getElementById('sfIcon').value.trim()||'🏪',
     desc:document.getElementById('sfDesc').value.trim(),
     rating:document.getElementById('sfRating').value.trim()||'5.0',
     ulasan:document.getElementById('sfUlasan').value.trim()||'0',
-    wa, open:document.getElementById('sfOpenToggle').classList.contains('on')
+    wa, open:document.getElementById('sfOpenToggle').classList.contains('on'),
+    jamBuka:document.getElementById('sfJamBuka').value,
+    jamTutup:document.getElementById('sfJamTutup').value,
+    jamAktif,
+    photo:sfCurrentPhoto||null
   };
   if(editingSellerId){
     const s=DATA.sellers.find(x=>x.id===editingSellerId);
@@ -949,8 +1231,12 @@ function renderProductManager(){
     <div class="mp-section-title" style="color:var(--ink)"><i class="ti ti-tag"></i> Daftar Produk / Menu — ${s.name}</div>
     <div id="menuRows">
       ${s.menu.map((m,i)=>`
-        <div class="menu-row" draggable="true" data-idx="${i}">
+        <div class="menu-row" draggable="true" data-idx="${i}" style="flex-wrap:wrap;gap:8px">
           <span class="drag-handle ti ti-grip-vertical"></span>
+          <div class="menu-row-img-placeholder" id="mpImgBox${i}" title="Upload foto produk" onclick="document.getElementById('mpImgFile${i}').click()">
+            <input type="file" id="mpImgFile${i}" accept=".jpg,.jpeg,.png,.svg,image/jpeg,image/png,image/svg+xml" style="display:none" onchange="handleMenuImgUpload(${id},${i},this)">
+            ${m.img?`<img src="${m.img}" style="width:100%;height:100%;object-fit:cover;border-radius:6px" alt="">` : '<i class="ti ti-photo" style="font-size:14px;color:#b0b8cc"></i>'}
+          </div>
           <input class="mname" value="${m.n}" onchange="updateMenuField(${id},${i},'n',this.value)" placeholder="Nama produk">
           <input class="mprice" type="number" value="${m.p}" onchange="updateMenuField(${id},${i},'p',this.value)" placeholder="Harga">
           <button class="mdel" onclick="deleteMenuItem(${id},${i})"><i class="ti ti-x"></i></button>
@@ -1035,26 +1321,27 @@ function initSettingsTab(){
 }
 function renderOngkirList(){
   const box=document.getElementById('ongkirList');
-  const list=DATA.ongkir||[];
-  box.innerHTML=list.map((o,i)=>`
-    <div class="menu-row" style="margin-bottom:8px">
-      <input style="flex:1.5;min-width:0" class="mname" value="${o.label}" placeholder="Nama area" onchange="DATA.ongkir[${i}].label=this.value">
-      <input style="width:100px" class="mprice" type="number" value="${o.harga}" placeholder="Harga" onchange="DATA.ongkir[${i}].harga=parseInt(this.value)||0">
-      <button class="mdel" onclick="removeOngkir(${i})"><i class="ti ti-x"></i></button>
-    </div>`).join('') || '<div class="help-txt" style="margin-bottom:8px">Belum ada opsi ongkos kirim.</div>';
+  // Show DESA_ONGKIR as editable table
+  box.innerHTML=`
+    <div style="background:#fff;border-radius:10px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:1rem">
+      ${DESA_LIST.map(desa=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #f0f2f7">
+          <span style="font-size:12.5px;color:#333;font-weight:600">📍 ${desa}</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:11px;color:#888">Rp</span>
+            <input type="number" style="width:80px;border:1.5px solid #d1d5db;border-radius:6px;padding:5px 7px;font-size:12px;font-family:inherit;text-align:right"
+              value="${DESA_ONGKIR[desa]}"
+              onchange="DESA_ONGKIR['${desa}']=parseInt(this.value)||0;syncDesaOngkir()">
+          </div>
+        </div>`).join('')}
+    </div>
+    <button class="btn-order" style="background:var(--blue);margin-bottom:.5rem" onclick="syncDesaOngkir();showToast('Ongkos kirim disimpan ✓')"><i class="ti ti-device-floppy"></i> Simpan Ongkos Kirim</button>
+  `;
 }
-function addOngkir(){
-  if(!DATA.ongkir) DATA.ongkir=[];
-  DATA.ongkir.push({label:'Area Baru',harga:5000});
-  renderOngkirList();
-}
-function removeOngkir(i){
-  DATA.ongkir.splice(i,1);
-  renderOngkirList();
-}
-function saveOngkir(){
+function syncDesaOngkir(){
+  // Sync DESA_ONGKIR into DATA.ongkir for backward compat
+  DATA.ongkir=DESA_LIST.map(d=>({label:d,harga:DESA_ONGKIR[d]}));
   saveData();
-  showToast('Ongkos kirim disimpan');
 }
 function saveSettings(){
   DATA.settings.namaUtama=document.getElementById('setNamaUtama').value.trim()||'Kedungbanteng';
@@ -1073,9 +1360,82 @@ function changePassword(){
 function resetData(){
   if(!confirm('Reset semua data seller & produk ke data default? Perubahan yang sudah dibuat akan hilang.')) return;
   DATA={sellers:JSON.parse(JSON.stringify(defaultSellers)),settings:JSON.parse(JSON.stringify(defaultSettings)),ongkir:JSON.parse(JSON.stringify(defaultOngkir)),nextId:9,orderCounter:1};
+  // Reset desa ongkir
+  defaultOngkir.forEach(o=>{ if(DESA_ONGKIR.hasOwnProperty(o.label)) DESA_ONGKIR[o.label]=o.harga; });
   saveData(); renderDashboard(); renderAdminSellers(); initProductTab(); initSettingsTab();
   applySettingsToStore(); renderGrid();
   showToast('Data direset ke default');
+}
+
+/* ===================== EXPORT HTML ===================== */
+function exportHTML(){
+  saveData();
+  // Get current full HTML source
+  const originalHTML=document.documentElement.outerHTML;
+
+  // We'll inject the current DATA into the defaultSellers, defaultSettings, defaultOngkir
+  // so the downloaded file works as a standalone updated file
+  const currentData=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+  const sellers=currentData.sellers||defaultSellers;
+  const settings=currentData.settings||defaultSettings;
+  const ongkir=currentData.ongkir||defaultOngkir;
+  const nextId=currentData.nextId||9;
+  const orderCounter=currentData.orderCounter||1;
+
+  // Build ongkir object string
+  const ongkirObj=ongkir.map(o=>`  "${o.label}":${o.harga}`).join(',\n');
+
+  // Build desa_ongkir block replacement
+  const newDesaOngkir=`const DESA_ONGKIR={\n${ongkirObj}\n};`;
+
+  // Build defaultSellers replacement
+  const newDefaultSellers=`const defaultSellers=${JSON.stringify(sellers,null,2)};`;
+
+  // Build defaultSettings replacement
+  const newDefaultSettings=`const defaultSettings=${JSON.stringify(settings)};`;
+
+  // Build nextId / orderCounter
+  const newDataInit=`function loadData(){\n  try{\n    const raw=localStorage.getItem(STORAGE_KEY);\n    if(raw){\n      const d=JSON.parse(raw);\n      if(!d.ongkir) d.ongkir=JSON.parse(JSON.stringify(defaultOngkir));\n      if(!d.orderCounter) d.orderCounter=1;\n      return d;\n    }\n  }catch(e){}\n  return {sellers:JSON.parse(JSON.stringify(defaultSellers)),settings:JSON.parse(JSON.stringify(defaultSettings)),ongkir:JSON.parse(JSON.stringify(defaultOngkir)),nextId:${nextId},orderCounter:${orderCounter}};\n}`;
+
+  let html=originalHTML;
+
+  // Replace defaultSellers block
+  html=html.replace(/const defaultSellers=\[[\s\S]*?\];/,newDefaultSellers);
+  // Replace defaultSettings line
+  html=html.replace(/const defaultSettings=\{[^}]+\};/,newDefaultSettings);
+  // Replace DESA_ONGKIR block
+  html=html.replace(/const DESA_ONGKIR=\{[\s\S]*?\};/,newDesaOngkir);
+  // Replace loadData function
+  html=html.replace(/function loadData\(\)\{[\s\S]*?^\}/m,newDataInit);
+
+  // Add DOCTYPE if missing
+  if(!html.startsWith('<!DOCTYPE')){html='<!DOCTYPE html>\n'+html;}
+
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  const now=new Date();
+  const tgl=`${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  a.download=`marketplace-kedungbanteng-${tgl}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('File HTML berhasil didownload ✓');
+}
+
+function exportJSON(){
+  saveData();
+  const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  const now=new Date();
+  const tgl=`${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+  a.download=`backup-data-kedungbanteng-${tgl}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Backup JSON berhasil didownload ✓');
 }
 
 /* ===================== INIT ===================== */
@@ -1084,9 +1444,5 @@ renderGrid();
 </script>
 </body>
 </html>
-HTMLEOF
-echo "Done"
-Output
 
-Done
 
